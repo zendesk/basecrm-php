@@ -56,17 +56,9 @@ To access contacts, access the `contacts` property on the client, which will ret
 $scope = $client->contacts
 ```
 
-### Deals
-
-To access deals, access the `contacts` property on the client, which will return a `\BaseCrm\Scope` connected to Deals.
-
-```php
-$scope = $client->deals
-```
-
 ### Leads
 
-To access deals, access the `contacts` property on the client, which will return a `\BaseCrm\Scope` connected to Leads.
+To access deals, access the `leads` property on the client, which will return a `\BaseCrm\Scope` connected to Leads.
 
 ```php
 $scope = $client->leads
