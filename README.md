@@ -133,6 +133,15 @@ This returns a `\BaseCrm\Response` with a 200 response code in the `$code` prope
 ### Create a lead
 
 ```php
+<?php
+// if you use composer, require the autoload
+require __DIR__ . '/../vendor/autoload.php';
+// otherwise require the built distribution
+require __DIR__ . '/../dist/basecrm.php';
+
+$token = '[YOUR API TOKEN]';
+$client = new \BaseCrm\Client(['token' => $token]);
+
 $client->leads->create([
   "last_name" => "Johnson",
   "first_name" => "Mark",
@@ -140,9 +149,40 @@ $client->leads->create([
 ]);
 ```
 
+### Create a lead with custom fields
+
+```php
+<?php
+// if you use composer, require the autoload
+require __DIR__ . '/../vendor/autoload.php';
+// otherwise require the built distribution
+require __DIR__ . '/../dist/basecrm.php';
+
+$token = '[YOUR API TOKEN]';
+$client = new \BaseCrm\Client(['token' => $token]);
+
+$lead = $client->leads->create([
+  'first_name' => 'Mark',
+  'last_name' => 'Johnson',
+  'custom_field_values' => [
+    'Height' => '180',
+    'Group' => 'advanced'
+  ]
+]);
+```
+
 ### Create a contact
 
 ```php
+<?php
+// if you use composer, require the autoload
+require __DIR__ . '/../vendor/autoload.php';
+// otherwise require the built distribution
+require __DIR__ . '/../dist/basecrm.php';
+
+$token = '[YOUR API TOKEN]';
+$client = new \BaseCrm\Client(['token' => $token]);
+
 $client->contacts->create([
   "last_name" => "Johnson",
   "first_name" => "Mark"
