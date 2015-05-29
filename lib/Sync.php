@@ -38,9 +38,14 @@ class Sync
    * 
    * @param \BaseCRM\Client BaseCRM API V2 client instance. 
    * @param string $deviceUUID Device's UUID for which to perform synchronization.
+   *
+   * @throws InvalidArgumentException if deviceUUID is not a string
    */
-  public function __construct($client, $deviceUUID)
+  public function __construct(Client $client, $deviceUUID)
   {
+    if (!is_string($deviceUUID) || !trim($deviceUUID)) 
+      throw new InvalidArgumentException('deviceUUID argument must be a non-empty string');
+
     $this->client = $client;
     $this->deviceUUID = $deviceUUID;
   }
@@ -60,14 +65,12 @@ class Sync
    * ?>
    * </code>
    *
-   * @param callable $callback Callback that will be called for every item in queue.
+   * @param Closure $callback Callback that will be called for every item in queue.
    *  Takes two input arguments: synchronization meta data and associated resource. 
    *  It must return either ACK or NACK|null.
    */
-  public function fetch(callable $callback)
+  public function fetch(Closure $callback)
   {
-    // TODO: validate input
-
     // Set up a new synchronization session for a given device's UUID
     $session = $this->client->sync->start($this->deviceUUID);
 

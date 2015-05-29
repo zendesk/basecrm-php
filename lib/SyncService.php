@@ -37,7 +37,13 @@ class SyncService
    */
   public function start($deviceUUID)
   {
-    return [];
+    // @throws InvalidArgumentException
+    checkArgument($deviceUUID, 'deviceUUID');
+
+    list($code, $session) = $this->httpClient->post('/ack/start', null, buildHeaders($deviceUUID));
+
+    if ($code == 204) return null;
+    return $session;
   }
 
   /**
@@ -56,7 +62,15 @@ class SyncService
    */
   public function fetch($deviceUUID, $sessionId, $queue = 'main')
   {
-    return [];
+    // @throws InvalidArgumentException
+    checkArgument($deviceUUID, 'deviceUUID');
+    checkArgument($sessionId, 'sessionId');
+    checkArgument($queue, 'queue');
+
+    list($code, $items) = $this->httpClient->get("/sync/{$sessionId}/queues/{$queue}", null, buildHeaders($deviceUUID));
+    
+    if ($code == 204) return [];
+    return $items;
   }
 
   /**
@@ -74,6 +88,35 @@ class SyncService
    */
   public function ack($deviceUUID, array $ackKeys)
   {
-    return false;
+    // @throws InvalidArgumentException
+    checkArgument($deviceUUID, 'deviceUUID');
+
+    // fast path - nothing to acknowledge
+    if (!$ackKeys) return true;
+
+    $attributes = ['ack_keys' => $ackKeys];
+    list($code,) = $this->httpClient->post('/start/ack', $attributes, buildHeaders($deviceUUID));
+    return $code == 202;
+  }
+
+  /**
+   * Performs string's uuid/id validation.
+   *
+   * @ignore
+   */
+  private function checkArgument($argument, $argumentName)
+  {
+    if (!is_string($argument) || !trim($argument)) 
+      throw new InvalidArgumentException("{$argumentName} argument must be a non-empty string. Input was: {$argument}");
+  }
+
+  /**
+   * Builds array of headers required by Sync API.
+   *
+   * @ignore
+   */
+  private function buildHeaders($deviceUUID)
+  {
+    return ['X-Basecrm-Device-UUID' => $deviceUUID];
   }
 }
