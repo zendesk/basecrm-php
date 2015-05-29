@@ -113,6 +113,12 @@ class Client
    */
   public $users;
 
+  /**
+   * @var \BaseCRM\SyncService Access all Sync API related actions.
+   * @see \BaseCRM\SyncService
+   */
+  public $sync;
+
   /*
    * Instantiate a new BaseCRM API V2 client. 
    * Client accepts an array of configuration options.
@@ -156,5 +162,7 @@ class Client
     $this->tags = new TagsService($this->httpClient);
     $this->tasks = new TasksService($this->httpClient);
     $this->users = new UsersService($this->httpClient);
+
+    $this->sync = new SyncService($this->httpClient);
   }
 }
