@@ -19,12 +19,13 @@ class HttpClient
    *
    * @param string $url Url to send the request to.
    * @param array $params Query params to send with the request. They are converted to a query string and attached to the url.
+   * @param array $headers Additional headers to send with the request.
    *
    * @return array Array where first element is http status code and the second one is resource.
    */
-  public function get($url, array $params = null)
+  public function get($url, array $params = null, array $headers = null)
   {
-    return $this->request('GET', $url, $params);
+    return $this->request('GET', $url, $params, null, $headers);
   }
 
   /**
@@ -32,12 +33,13 @@ class HttpClient
    *
    * @param string $url Url to send the request to.
    * @param array $body Body params to send with the request. They are converted to json and sent in the body.
+   * @param array $headers Additional headers to send with the request.
    *
    * @return array Array where first element is http status code and the second one is resource.
    */
-  public function post($url, array $body = null)
+  public function post($url, array $body = null, array $headers = null)
   {
-    return $this->request('POST', $url, null, $body);
+    return $this->request('POST', $url, null, $body, $headers);
   }
 
   /**
@@ -45,12 +47,13 @@ class HttpClient
    *
    * @param string $url Url to send the request to.
    * @param array $body Body params to send with the request. They are converted to json and sent in the body.
+   * @param array $headers Additional headers to send with the request.
    *
    * @return array Array where first element is http status code and the second one is resource.
    */
-  public function put($url, array $body = null)
+  public function put($url, array $body = null, array $headers = null)
   {
-    return $this->request('PUT', $url, null, $body);
+    return $this->request('PUT', $url, null, $body, $headers);
   }
 
   /**
@@ -58,12 +61,13 @@ class HttpClient
    *
    * @param string $url Url to send the request to.
    * @param array $params Query params to send with the request. They are converted to a query string and attached to the url.
+   * @param array $headers Additional headers to send with the request.
    *
    * @return array Array where first element is http status code and the second one is resource.
    */
-  public function delete($url, array $params = null)
+  public function delete($url, array $params = null, array $headers = null)
   {
-    return $this->request('DELETE', $url, $params);
+    return $this->request('DELETE', $url, $params, null, $headers);
   }
 
   /**
@@ -73,6 +77,7 @@ class HttpClient
    * @param string $url Url to send the request to.
    * @param array $params Query params to send with the request. They are converted to a query string and attached to the url.
    * @param array $body Body params to send with the request. They are converted to json and sent in the body.
+   * @param array $headers Additional headers to send with the request.
    *
    * @throws \BaseCRM\Errors\ConnectionError if connnection error occurrs e.g. timeout, dns issue etc.
    * @throws \BaseCRM\Errors\RequestError if request was invalid
@@ -81,15 +86,17 @@ class HttpClient
    *
    * @return array Array where first element is http status code and the second one is resource.
    */
-  public function request($method, $url, array $params = null, array $body = null)
+  public function request($method, $url, array $params = null, array $body = null, array $headers = null)
   {
     $method = strtolower($method);
 
-    $headers = [
+    $default_headers = [
       'User-Agent' => $this->config->userAgent,
       'Authorization' => "Bearer {$this->config->accessToken}",
       'Accept' => 'application/json'
     ];
+
+    $headers = array_merge($default_headers, $headers ? $headers : array());
 
     if ($body && in_array($method, ['post', 'put', 'patch']))
     {
