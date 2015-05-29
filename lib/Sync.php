@@ -41,6 +41,8 @@ class Sync
    */
   public function __construct($client, $deviceUUID)
   {
+    $this->client = $client;
+    $this->deviceUUID = $deviceUUID;
   }
 
   /**
@@ -64,6 +66,38 @@ class Sync
    */
   public function fetch(callable $callback)
   {
-    return;
+    // TODO: validate input
+
+    // Set up a new synchronization session for a given device's UUID
+    $session = $this->client->sync->start($this->deviceUUID);
+
+    // Check if there is anything to synchronize
+    if (!$session || $session['id']) return;
+
+    $sessionId = $session['id'];
+
+    // Drain the main queue unitl there is no data (empty array)
+    while (true)
+    {
+      // fetch the main queue
+      $queueItems = $this->client->sync->fetch($this->deviceUUID, $sessionId);
+
+      // nothing more to synchronize ?
+      if (!$queueItems) break;
+
+      // let client know about data and meta 
+      $ackKeys = array();
+      
+      foreach ($queueItems as $item)
+      {
+        if (callback($item['meta'], $item['data']))
+        {
+          $ackKeys[] = $item['meta']['sync']['ack_key'];
+        }
+      }
+      
+      // As we fetch new data, we need to send acknowledgement keys - if any
+      if ($ackKeys) $this->client->sync->ack($this->deviceUUID, $ackKeys);
+    }
   }
 }
