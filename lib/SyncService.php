@@ -40,7 +40,7 @@ class SyncService
     // @throws InvalidArgumentException
     checkArgument($deviceUUID, 'deviceUUID');
 
-    list($code, $session) = $this->httpClient->post('/ack/start', null, buildHeaders($deviceUUID));
+    list($code, $session) = $this->httpClient->post('/ack/start', null, ['headers' => buildHeaders($deviceUUID)]);
 
     if ($code == 204) return null;
     return $session;
@@ -67,10 +67,14 @@ class SyncService
     checkArgument($sessionId, 'sessionId');
     checkArgument($queue, 'queue');
 
-    list($code, $items) = $this->httpClient->get("/sync/{$sessionId}/queues/{$queue}", null, buildHeaders($deviceUUID));
+    $options = [
+      'headers' => buildHeaders($deviceUUID),
+      'raw' => true
+    ];
+    list($code, $root) = $this->httpClient->get("/sync/{$sessionId}/queues/{$queue}", null, $options);
     
     if ($code == 204) return [];
-    return $items;
+    return $root['items'];
   }
 
   /**
@@ -95,7 +99,7 @@ class SyncService
     if (!$ackKeys) return true;
 
     $attributes = ['ack_keys' => $ackKeys];
-    list($code,) = $this->httpClient->post('/start/ack', $attributes, buildHeaders($deviceUUID));
+    list($code,) = $this->httpClient->post('/start/ack', $attributes, ['headers' => buildHeaders($deviceUUID)]);
     return $code == 202;
   }
 
