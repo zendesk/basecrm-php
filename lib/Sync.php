@@ -69,13 +69,13 @@ class Sync
    *  Takes two input arguments: synchronization meta data and associated resource. 
    *  It must return either ACK or NACK|null.
    */
-  public function fetch(Closure $callback)
+  public function fetch(\Closure $callback)
   {
     // Set up a new synchronization session for a given device's UUID
     $session = $this->client->sync->start($this->deviceUUID);
 
     // Check if there is anything to synchronize
-    if (!$session || $session['id']) return;
+    if (!$session || !$session['id']) return;
 
     $sessionId = $session['id'];
 
@@ -93,7 +93,7 @@ class Sync
       
       foreach ($queueItems as $item)
       {
-        if (callback($item['meta'], $item['data']))
+        if ($callback($item['meta'], $item['data']))
         {
           $ackKeys[] = $item['meta']['sync']['ack_key'];
         }
