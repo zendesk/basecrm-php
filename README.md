@@ -155,6 +155,33 @@ catch (Exception $e)
 }
 ```
 
+## Sync API
+
+The following sample code shows how to perform a full synchronization flow using high-level wrapper.
+
+First of all you need an instance of `\BaseCRM\Client`. High-level `\BaseCRM\Sync` wrapper uses `\BaseCRM\SyncService` to interact with the Sync API.
+In addition to the client instance, you must provide a device’s UUID within `$deviceUUID` parameter. The device’s UUID must not change between synchronization sessions, otherwise the sync service will not recognize the device and will send all the data again.
+
+```php
+$client = new \BaseCRM\Client(['access_token' => '<YOUR_PERSONAL_ACCESS_TOKEN>']);
+$sync = new \BaseCRM\Sync($client, '<YOUR_DEVICES_UUID');
+```
+
+Now all you have to do is to call `fetch` method and pass a block that you might use to store fetched data to a database.
+
+```php
+$sync.fetch(function ($meta, $data) {
+  $options = [
+    'table' => $meta['type'],
+    'statement' => $meta['sync']['event_type'],
+    'properties' => $data
+  ];
+  return \DAO::execute($options) ? \BaseCRM\Sync::ACK : \BaseCRM\Sync::NACK;
+});
+```
+
+Notice that you must call either `#ack` or `#nack` method.
+
 ## Resources and actions
 
 Documentation for every action can be found in corresponding service files under `lib/` directory.
