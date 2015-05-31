@@ -1,7 +1,7 @@
 <?php
 namespace BaseCRM;
 
-class SyncServiceTest extends \PHPUnit_Framework_TestCase
+class SyncTest extends \PHPUnit_Framework_TestCase
 {
   public $deviceUUID = '6dadcec8-6e61-4691-b318-1aab27b8fecf';
   public $sessionId = '29f2aeeb-8d68-4ea7-95c3-a2c8e151f5a3';
