@@ -71,4 +71,9 @@ class ClientTest extends TestCase
   {
     $this->assertTrue(property_exists(self::$client, 'users'));
   }
+
+  public function testSyncPropertyExists()
+  {
+    $this->assertTrue(property_exists(self::$client, 'sync'));
+  }
 }
