@@ -2,7 +2,7 @@
 
 ### v1.1.0 (2015-06-01)
 
-** Features and Improvements **
+**Features and Improvements**
 
 * `\BaseCRM\HttpClient` methods accept additional `$options` 
 * Sync API support
