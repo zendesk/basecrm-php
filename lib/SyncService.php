@@ -38,9 +38,9 @@ class SyncService
   public function start($deviceUUID)
   {
     // @throws InvalidArgumentException
-    checkArgument($deviceUUID, 'deviceUUID');
+    $this->checkArgument($deviceUUID, 'deviceUUID');
 
-    list($code, $session) = $this->httpClient->post('/ack/start', null, ['headers' => buildHeaders($deviceUUID)]);
+    list($code, $session) = $this->httpClient->post('/sync/start', null, ['headers' => $this->buildHeaders($deviceUUID)]);
 
     if ($code == 204) return null;
     return $session;
@@ -63,12 +63,12 @@ class SyncService
   public function fetch($deviceUUID, $sessionId, $queue = 'main')
   {
     // @throws InvalidArgumentException
-    checkArgument($deviceUUID, 'deviceUUID');
-    checkArgument($sessionId, 'sessionId');
-    checkArgument($queue, 'queue');
+    $this->checkArgument($deviceUUID, 'deviceUUID');
+    $this->checkArgument($sessionId, 'sessionId');
+    $this->checkArgument($queue, 'queue');
 
     $options = [
-      'headers' => buildHeaders($deviceUUID),
+      'headers' => $this->buildHeaders($deviceUUID),
       'raw' => true
     ];
     list($code, $root) = $this->httpClient->get("/sync/{$sessionId}/queues/{$queue}", null, $options);
@@ -93,13 +93,13 @@ class SyncService
   public function ack($deviceUUID, array $ackKeys)
   {
     // @throws InvalidArgumentException
-    checkArgument($deviceUUID, 'deviceUUID');
+    $this->checkArgument($deviceUUID, 'deviceUUID');
 
     // fast path - nothing to acknowledge
     if (!$ackKeys) return true;
 
     $attributes = ['ack_keys' => $ackKeys];
-    list($code,) = $this->httpClient->post('/start/ack', $attributes, ['headers' => buildHeaders($deviceUUID)]);
+    list($code,) = $this->httpClient->post('/sync/ack', $attributes, ['headers' => $this->buildHeaders($deviceUUID)]);
     return $code == 202;
   }
 
