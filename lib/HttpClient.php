@@ -19,13 +19,15 @@ class HttpClient
    *
    * @param string $url Url to send the request to.
    * @param array $params Query params to send with the request. They are converted to a query string and attached to the url.
-   * @param array $headers Additional headers to send with the request.
+   * @param array $options Additional request's options.
+   *  @option array 'headers' Additional headers to send with the request
+   *  @option boolean 'raw' Indicator whether to wrap and uwrap request in the envelope.
    *
    * @return array Array where first element is http status code and the second one is resource.
    */
-  public function get($url, array $params = null, array $headers = null)
+  public function get($url, array $params = null, array $options = array())
   {
-    return $this->request('GET', $url, $params, null, $headers);
+    return $this->request('GET', $url, $params, null, $options);
   }
 
   /**
@@ -33,13 +35,15 @@ class HttpClient
    *
    * @param string $url Url to send the request to.
    * @param array $body Body params to send with the request. They are converted to json and sent in the body.
-   * @param array $headers Additional headers to send with the request.
+   * @param array $options Additional request's options.
+   *  @option array 'headers' Additional headers to send with the request
+   *  @option boolean 'raw' Indicator whether to wrap and uwrap request in the envelope.
    *
    * @return array Array where first element is http status code and the second one is resource.
    */
-  public function post($url, array $body = null, array $headers = null)
+  public function post($url, array $body = null, array $options = array())
   {
-    return $this->request('POST', $url, null, $body, $headers);
+    return $this->request('POST', $url, null, $body, $options);
   }
 
   /**
@@ -47,13 +51,15 @@ class HttpClient
    *
    * @param string $url Url to send the request to.
    * @param array $body Body params to send with the request. They are converted to json and sent in the body.
-   * @param array $headers Additional headers to send with the request.
+   * @param array $options Additional request's options.
+   *  @option array 'headers' Additional headers to send with the request
+   *  @option boolean 'raw' Indicator whether to wrap and uwrap request in the envelope.
    *
    * @return array Array where first element is http status code and the second one is resource.
    */
-  public function put($url, array $body = null, array $headers = null)
+  public function put($url, array $body = null, array $options = array())
   {
-    return $this->request('PUT', $url, null, $body, $headers);
+    return $this->request('PUT', $url, null, $body, $options);
   }
 
   /**
@@ -61,13 +67,15 @@ class HttpClient
    *
    * @param string $url Url to send the request to.
    * @param array $params Query params to send with the request. They are converted to a query string and attached to the url.
-   * @param array $headers Additional headers to send with the request.
+   * @param array $options Additional request's options.
+   *  @option array 'headers' Additional headers to send with the request
+   *  @option boolean 'raw' Indicator whether to wrap and uwrap request in the envelope.
    *
    * @return array Array where first element is http status code and the second one is resource.
    */
-  public function delete($url, array $params = null, array $headers = null)
+  public function delete($url, array $params = null, array $options = array())
   {
-    return $this->request('DELETE', $url, $params, null, $headers);
+    return $this->request('DELETE', $url, $params, null, $options);
   }
 
   /**
@@ -77,7 +85,9 @@ class HttpClient
    * @param string $url Url to send the request to.
    * @param array $params Query params to send with the request. They are converted to a query string and attached to the url.
    * @param array $body Body params to send with the request. They are converted to json and sent in the body.
-   * @param array $headers Additional headers to send with the request.
+   * @param array $options Additional request's options.
+   *  @option array 'headers' Additional headers to send with the request
+   *  @option boolean 'raw' Indicator whether to wrap and uwrap request in the envelope.
    *
    * @throws \BaseCRM\Errors\ConnectionError if connnection error occurrs e.g. timeout, dns issue etc.
    * @throws \BaseCRM\Errors\RequestError if request was invalid
@@ -86,17 +96,19 @@ class HttpClient
    *
    * @return array Array where first element is http status code and the second one is resource.
    */
-  public function request($method, $url, array $params = null, array $body = null, array $headers = null)
+  public function request($method, $url, array $params = null, array $body = null, array $options = array())
   {
     $method = strtolower($method);
 
-    $default_headers = [
+    $defaultHeaders = [
       'User-Agent' => $this->config->userAgent,
       'Authorization' => "Bearer {$this->config->accessToken}",
       'Accept' => 'application/json'
     ];
 
-    $headers = array_merge($default_headers, $headers ? $headers : array());
+    $userHeaders = ($options && isset($options['headers']) && is_array($options['headers'])) ? $options['headers'] : array();
+
+    $headers = array_merge($defaultHeaders, $userHeaders);
 
     if ($body && in_array($method, ['post', 'put', 'patch']))
     {
@@ -115,6 +127,7 @@ class HttpClient
     }
 
     $absUrl = $this->config->baseUrl . self::API_VERSION_PREFIX . $url;
+    $raw = ($options && isset($options['raw'])) ? !!$options['raw'] : false;
 
     $curl = curl_init();
     if ($this->config->verbose) curl_setopt($curl, CURLOPT_VERBOSE, true);
@@ -124,7 +137,7 @@ class HttpClient
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
     if ($body && in_array($method, ['post', 'put', 'patch']))
     {
-      $envelope = $this->wrapEnvelope($body);
+      $envelope = $raw ? $body : $this->wrapEnvelope($body);
       $payload = json_encode($envelope);
       curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
     }
@@ -145,7 +158,8 @@ class HttpClient
     $resource = null;
     if ($resp != null)
     {
-      $resource = $this->handleResponse($code, $resp);
+      $decodedResponse = $this->handleResponse($code, $resp);
+      $resource = $raw ? $decodedResponse : $this->unwrapEnvelope($decodedResponse);
     }    
     return array($code, $resource);
   }
@@ -198,7 +212,7 @@ class HttpClient
    * @throws \BaseCRM\Errors\ResourceError if request's payload validation failed
    * @throws \BaseCRM\Errors\ServerError if server error occurred
    *
-   * @return mixed Unwrapped resource or an array of resources
+   * @return mixed Decoded response 
    *
    * @ignore
    */
@@ -221,7 +235,7 @@ class HttpClient
       $this->handleErrorResponse($code, $rawResponse, $response);
     }
 
-    return $this->unwrapEnvelope($response);
+    return $response;
   }
 
   /**
