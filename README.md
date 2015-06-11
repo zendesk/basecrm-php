@@ -170,7 +170,7 @@ $sync = new \BaseCRM\Sync($client, '<YOUR_DEVICES_UUID');
 Now all you have to do is to call `fetch` method and pass a block that you might use to store fetched data to a database.
 
 ```php
-$sync.fetch(function ($meta, $data) {
+$sync->fetch(function ($meta, $data) {
   $options = [
     'table' => $meta['type'],
     'statement' => $meta['sync']['event_type'],
