@@ -1,5 +1,12 @@
 ## CHANGELOG
 
+### v1.1.1 (2015-11-03)
+
+**Improvements**
+
+* `\BaseCRM\LeadsService` allows to set `source_id`
+* `\BaseCRM\DealsService` allows to set `estimated_close_date`
+
 ### v1.1.0 (2015-06-01)
 
 **Features and Improvements**
