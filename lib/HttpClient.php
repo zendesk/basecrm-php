@@ -7,7 +7,7 @@ class HttpClient
   const API_VERSION_PREFIX = "/v2"; 
     
   // @ignore
-  private $config;
+  protected $config;
 
   public function __construct(Configuration $config)
   {
@@ -172,7 +172,7 @@ class HttpClient
    *
    * @ignore
    */
-  private function wrapEnvelope(array $body)
+  protected function wrapEnvelope(array $body)
   {
     return ['data' => $body];
   }
@@ -185,7 +185,7 @@ class HttpClient
    *
    * @ignore
    */
-  private function unwrapEnvelope(array $body)
+  protected function unwrapEnvelope(array $body)
   {
     if (isset($body['data']))
     {
@@ -216,7 +216,7 @@ class HttpClient
    *
    * @ignore
    */
-  private function handleResponse($code, $rawResponse)
+  protected function handleResponse($code, $rawResponse)
   {
     try 
     {
@@ -241,7 +241,7 @@ class HttpClient
   /**
    * @ignore
    */
-  private function handleErrorResponse($code, $rawResponse, $response)
+  protected function handleErrorResponse($code, $rawResponse, $response)
   {
     switch(true)
     {

@@ -12,9 +12,9 @@ namespace BaseCRM;
 class SourcesService
 {
   // @var array Allowed attribute names.
-  private static $keysToPersist = ['name'];
+  protected static $keysToPersist = ['name'];
 
-  private $httpClient;
+  protected $httpClient;
 
   /**
    * Instantiate a new SourcesService instance.

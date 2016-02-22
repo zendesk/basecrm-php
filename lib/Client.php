@@ -15,7 +15,7 @@ class Client
    * @var \BaseCRM\HttpClient Http client
    * @ignore 
    */
-  private $httpClient;
+  protected $httpClient;
 
   /**
    * @var \BaseCRM\Configuration Client configuratation

@@ -25,13 +25,13 @@ class Sync
    * @var string Device's UUID.
    * @ignore
    */
-  private $deviceUUID;
+  protected $deviceUUID;
 
   /**
    * @var \BaseCRM\Client BaseCRM client.
    * @ignore
    */
-  private $client;
+  protected $client;
 
   /**
    * Instantiate a new high-level Sync wrapper instance.

@@ -12,9 +12,9 @@ namespace BaseCRM;
 class DealsService
 {
   // @var array Allowed attribute names.
-  private static $keysToPersist = ['contact_id', 'currency', 'custom_fields', 'estimated_close_date', 'hot', 'loss_reason_id', 'name', 'owner_id', 'source_id', 'stage_id', 'tags', 'value'];
+  protected static $keysToPersist = ['contact_id', 'currency', 'custom_fields', 'estimated_close_date', 'hot', 'loss_reason_id', 'name', 'owner_id', 'source_id', 'stage_id', 'tags', 'value'];
 
-  private $httpClient;
+  protected $httpClient;
 
   /**
    * Instantiate a new DealsService instance.

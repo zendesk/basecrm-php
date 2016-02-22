@@ -11,7 +11,7 @@ namespace BaseCRM;
  */
 class SyncService
 {
-  private $httpClient;
+  protected $httpClient;
 
   /**
    * Instantiate a new SyncService instance.
@@ -108,7 +108,7 @@ class SyncService
    *
    * @ignore
    */
-  private function checkArgument($argument, $argumentName)
+  protected function checkArgument($argument, $argumentName)
   {
     if (!is_string($argument) || !trim($argument)) 
       throw new InvalidArgumentException("{$argumentName} argument must be a non-empty string. Input was: {$argument}");
@@ -119,7 +119,7 @@ class SyncService
    *
    * @ignore
    */
-  private function buildHeaders($deviceUUID)
+  protected function buildHeaders($deviceUUID)
   {
     return ['X-Basecrm-Device-UUID' => $deviceUUID];
   }

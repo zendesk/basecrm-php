@@ -12,9 +12,9 @@ namespace BaseCRM;
 class AssociatedContactsService
 {
   // @var array Allowed attribute names.
-  private static $keysToPersist = ['contact_id', 'role'];
+  protected static $keysToPersist = ['contact_id', 'role'];
 
-  private $httpClient;
+  protected $httpClient;
 
   /**
    * Instantiate a new AssociatedContactsService instance.
