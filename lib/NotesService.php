@@ -12,9 +12,9 @@ namespace BaseCRM;
 class NotesService
 {
   // @var array Allowed attribute names.
-  private static $keysToPersist = ['content', 'resource_id', 'resource_type'];
+  protected static $keysToPersist = ['content', 'resource_id', 'resource_type'];
 
-  private $httpClient;
+  protected $httpClient;
 
   /**
    * Instantiate a new NotesService instance.

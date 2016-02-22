@@ -12,9 +12,9 @@ namespace BaseCRM;
 class TasksService
 {
   // @var array Allowed attribute names.
-  private static $keysToPersist = ['completed', 'content', 'due_date', 'owner_id', 'remind_at', 'resource_id', 'resource_type'];
+  protected static $keysToPersist = ['completed', 'content', 'due_date', 'owner_id', 'remind_at', 'resource_id', 'resource_type'];
 
-  private $httpClient;
+  protected $httpClient;
 
   /**
    * Instantiate a new TasksService instance.

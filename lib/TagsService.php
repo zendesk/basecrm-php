@@ -12,9 +12,9 @@ namespace BaseCRM;
 class TagsService
 {
   // @var array Allowed attribute names.
-  private static $keysToPersist = ['name', 'resource_type'];
+  protected static $keysToPersist = ['name', 'resource_type'];
 
-  private $httpClient;
+  protected $httpClient;
 
   /**
    * Instantiate a new TagsService instance.

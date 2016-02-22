@@ -11,7 +11,7 @@ namespace BaseCRM;
  */
 class PipelinesService
 {
-  private $httpClient;
+  protected $httpClient;
 
   /**
    * Instantiate a new PipelinesService instance.

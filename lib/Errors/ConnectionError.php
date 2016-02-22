@@ -5,7 +5,7 @@ use Exception;
 
 class ConnectionError extends Exception
 {
-  private $errno, $error_message;
+  protected $errno, $error_message;
 
   public function __construct($errno, $error_message)
   {

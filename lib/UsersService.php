@@ -11,7 +11,7 @@ namespace BaseCRM;
  */
 class UsersService
 {
-  private $httpClient;
+  protected $httpClient;
 
   /**
    * Instantiate a new UsersService instance.

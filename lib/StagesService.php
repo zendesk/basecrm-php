@@ -11,7 +11,7 @@ namespace BaseCRM;
  */
 class StagesService
 {
-  private $httpClient;
+  protected $httpClient;
 
   /**
    * Instantiate a new StagesService instance.

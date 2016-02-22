@@ -100,7 +100,7 @@ class Configuration
   /**
    * @ignore
    */
-  private function _accessTokenIsMissing()
+  protected function _accessTokenIsMissing()
   {
     $msg = 'No access token provided. '
       . 'Set your access token during client initialization using: '
