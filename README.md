@@ -60,7 +60,7 @@ The library follows few architectural principles you should understand before di
 For example, to interact with deals API you will use `\BaseCRM\DealsService`, which you can get if you call:
 
 ```php
-$client = new \BaseCRM\Client(['accessToken] => '<YOUR_PERSONAL_ACCESS_TOKEN>']);
+$client = new \BaseCRM\Client(['accessToken' => '<YOUR_PERSONAL_ACCESS_TOKEN>']);
 $client->deals; // \BaseCRM\DealsService
 ```
 
@@ -68,7 +68,7 @@ To retrieve list of resources and use filtering you will call `#all` method:
 
 ```php
 $client = new \BaseCRM\Client(['accessToken' => '<YOUR_PERSONAL_ACCESS_TOKEN>']);
-$client->deals->all('organization_id' => google['id'], 'hot' => true]);
+$client->deals->all(['organization_id' => google['id'], 'hot' => true]);
 ```
 
 To find a resource by it's unique identifier use `#get` method:
