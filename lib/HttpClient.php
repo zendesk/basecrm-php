@@ -139,7 +139,7 @@ class HttpClient
     if ($body && in_array($method, ['post', 'put', 'patch']))
     {
       $envelope = $raw ? $body : $this->wrapEnvelope($body);
-      $payload = json_encode($envelope);
+      $payload = json_encode($this->encodePayload($envelope));
       curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
     }
     $resp = curl_exec($curl);
@@ -204,6 +204,27 @@ class HttpClient
     }
     return $body;
   }
+
+  /**
+   * Ensure consistency in encoding between native PHP types and Base API expected types.
+   *
+   * @param array $params Associative array of either wrapped or unwrapped payload to be send.
+   * @return array Associative array with properly handled data types
+   *
+   * @ignore
+   */
+  protected function encodePayload(array $params)
+  {
+    $encoded = [];
+    foreach ($params as $key => $value)
+    {
+      if (is_array($value))                 $encoded[$key] = $this->encodePayload($value);
+      else if ($value instanceof \DateTime) $encoded[$key] = $value->format(\DateTime::ISO8601);
+      else                                  $encoded[$key] = $value;
+    }
+
+    return $encoded;
+  } 
 
   /**
    * @param integer $code Http response code
