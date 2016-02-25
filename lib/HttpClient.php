@@ -122,7 +122,7 @@ class HttpClient
     }
 
     if ($params) {
-        $query = http_build_query($params);
+        $query = http_build_query($this->encodeQueryParams($params));
         $url = "{$url}?{$query}";
     }
 
@@ -224,6 +224,29 @@ class HttpClient
 
     return $encoded;
   } 
+
+  /**
+   * Ensure consistency in encoding between native PHP types and Base API expected query type format.
+   *
+   * @param array $params Associative array of query parameters to be send.
+   * @return array Associative array with properly handled data types
+   *
+   * @ignore
+   */
+  protected function encodeQueryParams(array $params)
+  {
+    $encoded = [];
+    foreach ($params as $key => $value)
+    {
+      if (is_array($value))                 $encoded[$key] = $this->encodeQueryParams($value);
+      else if (is_bool($value))             $encoded[$key] = $value ? 'true' : 'false';
+      else if ($value instanceof \DateTime) $encoded[$key] = $value->format(\DateTime::ISO8601);
+      else                                  $encoded[$key] = $value;
+    }
+
+    return $encoded;
+  } 
+
 
   /**
    * @param integer $code Http response code

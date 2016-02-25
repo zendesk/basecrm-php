@@ -37,4 +37,17 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
 
     $this->assertEquals($result, $expectation);
   }
+
+  public function testQueryParamBooleansEncoding()
+  {
+    $params = [
+      'active' => true,
+      'deactivated' => false
+    ];
+
+    $result = PHPUnitUtil::callMethod(self::$httpClient, 'encodeQueryParams', Array($params));
+    $expectation = ['active' => 'true', 'deactivated' => 'false'];
+
+    $this->assertEquals($result, $expectation);
+  }
 }
