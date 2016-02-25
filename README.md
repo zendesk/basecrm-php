@@ -48,6 +48,7 @@ The following options are available while instantiating a client:
  * __userAgent__: Default user-agent for all requests
  * __timeout__: Request timeout
  * __verbose__: Verbose/debug mode
+ * __verifySSL__: Whether to verify SSL or not. Default: true
 
 ### Architecture
 

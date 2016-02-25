@@ -131,6 +131,7 @@ class HttpClient
 
     $curl = curl_init();
     if ($this->config->verbose) curl_setopt($curl, CURLOPT_VERBOSE, true);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, $this->config->verifySSL);
     curl_setopt($curl, CURLOPT_URL, $absUrl);
     curl_setopt($curl, CURLOPT_HTTPHEADER, $rawHeaders);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
