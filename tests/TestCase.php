@@ -110,6 +110,22 @@ class TestCase extends \PHPUnit_Framework_TestCase
     return $deal;
   }
 
+  protected static function createDealWithDecimalValue(array $attributes = [])
+  {
+    $deal = [
+      'currency' => "EUR",
+      'dropbox_email' => "dropbox@4e627bcd.deals.futuresimple.com",
+      'hot' => true,
+      'name' => 'Website Redesign with decimal value' . rand(),
+      'tags' => ["important"],
+      'value' => "11.12",
+      'contact_id' => self::createContact()['id'],
+    ];
+    $deal = self::$client->deals->create(array_merge($deal, $attributes));
+
+    return $deal;
+  }
+
   protected static function createLead(array $attributes = [])
   {
     $lead = [

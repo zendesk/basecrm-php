@@ -1,5 +1,17 @@
 ## CHANGELOG
 
+### v1.1.2 (2016-02-26)
+
+**Features and Improvements**
+
+* Properly encode `\DateTime` objects [#8](https://github.com/basecrm/basecrm-php/pull/8)
+* Properly encode boolean query parameters [#9](https://github.com/basecrm/basecrm-php/pull/9)
+* `verifySSL` configuration option [#10](https://github.com/basecrm/basecrm-php/pull/10)
+* All `private` attributes methods are now marked as `protected` [#6](https://github.com/basecrm/basecrm-php/pull/6)
+* README updates
+  * Usage examples syntax fixes [#5](https://github.com/basecrm/basecrm-php/pull/5)
+  * Improve the phpunit command line example [#7](https://github.com/basecrm/basecrm-php/pull/7)
+
 ### v1.1.1 (2015-11-03)
 
 **Improvements**
