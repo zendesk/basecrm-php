@@ -15,7 +15,9 @@ class BaseError extends Exception
     $this->meta = $response['meta'];
   
     $extractError = function($error) {
-      return "resource=" . @$error['resource'] . " field=" . @$error['field'] . " code=" . $error['code'] . " message=" . $error['message'];
+    $message = $error['message'] . ($error['details'] ? ': ' . $error['details'] : '');
+    
+    return "resource=" . @$error['resource'] . " field=" . @$error['field'] . " code=" . $error['code'] . " message=" . $message;
     };
 
     $msg = implode("\n", array_map($extractError, $this->errors));
