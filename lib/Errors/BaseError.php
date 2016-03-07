@@ -10,17 +10,21 @@ class BaseError extends Exception
   public function __construct($httpStatusCode, $response)
   {
     $this->httpStatusCode = $httpStatusCode;
-    $this->errors = array_map(function($data){ return $data['error'];  }, $response['errors']);
+    $this->meta           = $response['meta'];
+    $this->errors         = [];
 
-    $this->meta = $response['meta'];
-  
-    $extractError = function($error) {
-    $message = $error['message'] . ($error['details'] ? ': ' . $error['details'] : '');
-    
-    return "resource=" . @$error['resource'] . " field=" . @$error['field'] . " code=" . $error['code'] . " message=" . $message;
-    };
+    if( isset( $response['errors'] ) && is_array( $response['errors'] )) { // -- errors given
+      $this->errors = array_map(function($data){ return $data['error'];  }, $response['errors']);
 
-    $msg = implode("\n", array_map($extractError, $this->errors));
+      $extractError = function($error) {
+        $message = $error['message'] . ($error['details'] ? ': '.$error['details'] : '');
+        return "resource=" . @$error['resource'] . " field=" . @$error['field'] . " code=" . $error['code'] . " message=" . $message;
+      };
+
+      $msg = implode("\n", array_map($extractError, $this->errors));
+    } else {
+      $msg = 'Unknown Error: HTTP '.$this->httpStatusCode;
+    }
 
     parent::__construct($msg);
   }
