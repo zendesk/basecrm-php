@@ -35,38 +35,35 @@ class LeadsServiceTest extends TestCase
 
   public function testAll()
   {
-    $leads = self::$client->leads->all(['page' => 1]);
+    $has_more = null;
+    $leads    = self::$client->leads->all(['page' => 1], $has_more);
     $this->assertInternalType('array', $leads);
- 
+    $this->assertNotNull( $has_more, '$has_more flag not modified' ); 
   }
 
   public function testCreate()
   {
     $this->assertInternalType('array', self::$lead);
-    $this->assertGreaterThanOrEqual(1, count(self::$lead));
- 
+    $this->assertGreaterThanOrEqual(1, count(self::$lead)); 
   }
 
   public function testGet()
   {
     $foundLead = self::$client->leads->get(self::$lead['id']);
     $this->assertInternalType('array', $foundLead);
-    $this->assertEquals($foundLead['id'], self::$lead['id']);
- 
+    $this->assertEquals($foundLead['id'], self::$lead['id']); 
   }
 
   public function testUpdate()
   {
     $updatedLead = self::$client->leads->update(self::$lead['id'], self::$lead);
     $this->assertInternalType('array', $updatedLead);
-    $this->assertEquals($updatedLead['id'], self::$lead['id']);
- 
+    $this->assertEquals($updatedLead['id'], self::$lead['id']); 
   }
 
   public function testDestroy()
   {
     $newLead = self::createLead();
-    $this->assertTrue(self::$client->leads->destroy($newLead['id']));
- 
+    $this->assertTrue(self::$client->leads->destroy($newLead['id'])); 
   }
 }  

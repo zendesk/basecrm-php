@@ -34,14 +34,28 @@ class AssociatedContactsService
    * Returns all deal associated contacts
    *
    * @param integer $deal_id Unique identifier of a Deal
-   * @param array $options Search options
+   * @param array $params Search parameters
+   * @param bool $has_more Flag set to true|false depending if there are more pages of data to fetch
    * 
    * @return array The list of AssociatedContacts for the first page, unless otherwise specified.
    */
-  public function all($deal_id, $options = [])
+  public function all($deal_id, $params = [], &$has_more = null)
   {
-    list($code, $associated_contacts) = $this->httpClient->get("/deals/{$deal_id}/associated_contacts", $options);
-    return $associated_contacts;  
+    $options      = [];
+    $needs_unwrap = false;
+    if( count( func_get_args()) > 1 ) { // -- hasMore flag was provided
+      $options      = ['raw' => true];
+      $needs_unwrap = true;
+    }
+
+    list($code, $items) = $this->httpClient->get("/deals/{$deal_id}/associated_contacts", $params, $options);
+
+    if( $needs_unwrap ) { // -- raw response
+      $has_more = isset( $items['meta']['links']['next_page'] );
+      $items    = $items['items'];
+    }
+
+    return $items;
   }
 
   /**

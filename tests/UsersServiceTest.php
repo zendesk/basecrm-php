@@ -25,23 +25,22 @@ class UsersServiceTest extends TestCase
 
   public function testAll()
   {
-    $users = self::$client->users->all(['page' => 1]);
+    $has_more = null;
+    $users    = self::$client->users->all(['page' => 1], $has_more);
     $this->assertInternalType('array', $users);
- 
+    $this->assertNotNull( $has_more, '$has_more flag not modified' ); 
   }
 
   public function testGet()
   {
     $foundUser = self::$client->users->get(self::$user['id']);
     $this->assertInternalType('array', $foundUser);
-    $this->assertEquals($foundUser['id'], self::$user['id']);
- 
+    $this->assertEquals($foundUser['id'], self::$user['id']); 
   }
 
   public function testSelf()
   {
     $resource = self::$client->users->self();
-    $this->assertInternalType('array', $resource);
- 
+    $this->assertInternalType('array', $resource); 
   }
 }  

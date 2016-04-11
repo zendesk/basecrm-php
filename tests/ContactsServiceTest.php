@@ -35,38 +35,35 @@ class ContactsServiceTest extends TestCase
 
   public function testAll()
   {
-    $contacts = self::$client->contacts->all(['page' => 1]);
+    $has_more = null;
+    $contacts = self::$client->contacts->all(['page' => 1], $has_more);
     $this->assertInternalType('array', $contacts);
- 
+    $this->assertNotNull( $has_more, '$has_more flag not modified' ); 
   }
 
   public function testCreate()
   {
     $this->assertInternalType('array', self::$contact);
-    $this->assertGreaterThanOrEqual(1, count(self::$contact));
- 
+    $this->assertGreaterThanOrEqual(1, count(self::$contact)); 
   }
 
   public function testGet()
   {
     $foundContact = self::$client->contacts->get(self::$contact['id']);
     $this->assertInternalType('array', $foundContact);
-    $this->assertEquals($foundContact['id'], self::$contact['id']);
- 
+    $this->assertEquals($foundContact['id'], self::$contact['id']); 
   }
 
   public function testUpdate()
   {
     $updatedContact = self::$client->contacts->update(self::$contact['id'], self::$contact);
     $this->assertInternalType('array', $updatedContact);
-    $this->assertEquals($updatedContact['id'], self::$contact['id']);
- 
+    $this->assertEquals($updatedContact['id'], self::$contact['id']); 
   }
 
   public function testDestroy()
   {
     $newContact = self::createContact();
-    $this->assertTrue(self::$client->contacts->destroy($newContact['id']));
- 
+    $this->assertTrue(self::$client->contacts->destroy($newContact['id'])); 
   }
 }  

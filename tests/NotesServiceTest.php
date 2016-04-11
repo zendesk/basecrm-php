@@ -35,38 +35,35 @@ class NotesServiceTest extends TestCase
 
   public function testAll()
   {
-    $notes = self::$client->notes->all(['page' => 1]);
+    $has_more = null;
+    $notes    = self::$client->notes->all(['page' => 1], $has_more);
     $this->assertInternalType('array', $notes);
- 
+    $this->assertNotNull( $has_more, '$has_more flag not modified' );
   }
 
   public function testCreate()
   {
     $this->assertInternalType('array', self::$note);
-    $this->assertGreaterThanOrEqual(1, count(self::$note));
- 
+    $this->assertGreaterThanOrEqual(1, count(self::$note)); 
   }
 
   public function testGet()
   {
     $foundNote = self::$client->notes->get(self::$note['id']);
     $this->assertInternalType('array', $foundNote);
-    $this->assertEquals($foundNote['id'], self::$note['id']);
- 
+    $this->assertEquals($foundNote['id'], self::$note['id']); 
   }
 
   public function testUpdate()
   {
     $updatedNote = self::$client->notes->update(self::$note['id'], self::$note);
     $this->assertInternalType('array', $updatedNote);
-    $this->assertEquals($updatedNote['id'], self::$note['id']);
- 
+    $this->assertEquals($updatedNote['id'], self::$note['id']); 
   }
 
   public function testDestroy()
   {
     $newNote = self::createNote();
-    $this->assertTrue(self::$client->notes->destroy($newNote['id']));
- 
+    $this->assertTrue(self::$client->notes->destroy($newNote['id'])); 
   }
 }  

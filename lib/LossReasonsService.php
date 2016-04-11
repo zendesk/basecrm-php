@@ -33,14 +33,28 @@ class LossReasonsService
    * 
    * Returns all deal loss reasons available to the user according to the parameters provided
    *
-   * @param array $options Search options
+   * @param array $params Search parameters
+   * @param bool $has_more Flag set to true|false depending if there are more pages of data to fetch
    * 
    * @return array The list of LossReasons for the first page, unless otherwise specified.
    */
-  public function all($options = [])
+  public function all($params = [], &$has_more = null)
   {
-    list($code, $loss_reasons) = $this->httpClient->get("/loss_reasons", $options);
-    return $loss_reasons;  
+    $options      = [];
+    $needs_unwrap = false;
+    if( count( func_get_args()) > 1 ) { // -- has_more flag was provided
+      $options      = ['raw' => true];
+      $needs_unwrap = true;
+    }
+
+    list($code, $items) = $this->httpClient->get("/loss_reasons", $params, $options);
+
+    if( $needs_unwrap ) { // -- raw response
+      $has_more = isset( $items['meta']['links']['next_page'] );
+      $items    = $items['items'];
+    }
+
+    return $items;
   }
 
   /**

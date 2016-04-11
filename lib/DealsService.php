@@ -33,14 +33,28 @@ class DealsService
    * 
    * Returns all deals available to the user according to the parameters provided
    *
-   * @param array $options Search options
+   * @param array $params Search parameters
+   * @param bool $has_more Flag set to true|false depending if there are more pages of data to fetch
    * 
    * @return array The list of Deals for the first page, unless otherwise specified.
    */
-  public function all($options = [])
+  public function all($params = [], &$has_more = null)
   {
-    list($code, $deals) = $this->httpClient->get("/deals", $options);
-    return $deals;  
+    $options      = [];
+    $needs_unwrap = false;
+    if( count( func_get_args()) > 1 ) { // -- hasMore flag was provided
+      $options      = ['raw' => true];
+      $needs_unwrap = true;
+    }
+
+    list($code, $items) = $this->httpClient->get("/deals", $params, $options);
+
+    if( $needs_unwrap ) { // -- raw response
+      $has_more = isset( $items['meta']['links']['next_page'] );
+      $items    = $items['items'];
+    }
+
+    return $items;
   }
 
   /**

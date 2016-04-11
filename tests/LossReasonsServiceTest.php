@@ -35,38 +35,35 @@ class LossReasonsServiceTest extends TestCase
 
   public function testAll()
   {
-    $lossReasons = self::$client->lossReasons->all(['page' => 1]);
+    $has_more    = null;
+    $lossReasons = self::$client->lossReasons->all(['page' => 1], $has_more);
     $this->assertInternalType('array', $lossReasons);
- 
+    $this->assertNotNull( $has_more, '$has_more flag not modified' );
   }
 
   public function testCreate()
   {
     $this->assertInternalType('array', self::$lossReason);
-    $this->assertGreaterThanOrEqual(1, count(self::$lossReason));
- 
+    $this->assertGreaterThanOrEqual(1, count(self::$lossReason)); 
   }
 
   public function testGet()
   {
     $foundLossReason = self::$client->lossReasons->get(self::$lossReason['id']);
     $this->assertInternalType('array', $foundLossReason);
-    $this->assertEquals($foundLossReason['id'], self::$lossReason['id']);
- 
+    $this->assertEquals($foundLossReason['id'], self::$lossReason['id']); 
   }
 
   public function testUpdate()
   {
     $updatedLossReason = self::$client->lossReasons->update(self::$lossReason['id'], self::$lossReason);
     $this->assertInternalType('array', $updatedLossReason);
-    $this->assertEquals($updatedLossReason['id'], self::$lossReason['id']);
- 
+    $this->assertEquals($updatedLossReason['id'], self::$lossReason['id']); 
   }
 
   public function testDestroy()
   {
     $newLossReason = self::createLossReason();
-    $this->assertTrue(self::$client->lossReasons->destroy($newLossReason['id']));
- 
+    $this->assertTrue(self::$client->lossReasons->destroy($newLossReason['id'])); 
   }
 }  

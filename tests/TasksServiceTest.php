@@ -35,38 +35,35 @@ class TasksServiceTest extends TestCase
 
   public function testAll()
   {
-    $tasks = self::$client->tasks->all(['page' => 1]);
+    $has_more = null;
+    $tasks    = self::$client->tasks->all(['page' => 1], $has_more);
     $this->assertInternalType('array', $tasks);
- 
+    $this->assertNotNull( $has_more, '$has_more flag not modified' );
   }
 
   public function testCreate()
   {
     $this->assertInternalType('array', self::$task);
-    $this->assertGreaterThanOrEqual(1, count(self::$task));
- 
+    $this->assertGreaterThanOrEqual(1, count(self::$task)); 
   }
 
   public function testGet()
   {
     $foundTask = self::$client->tasks->get(self::$task['id']);
     $this->assertInternalType('array', $foundTask);
-    $this->assertEquals($foundTask['id'], self::$task['id']);
- 
+    $this->assertEquals($foundTask['id'], self::$task['id']); 
   }
 
   public function testUpdate()
   {
     $updatedTask = self::$client->tasks->update(self::$task['id'], self::$task);
     $this->assertInternalType('array', $updatedTask);
-    $this->assertEquals($updatedTask['id'], self::$task['id']);
- 
+    $this->assertEquals($updatedTask['id'], self::$task['id']); 
   }
 
   public function testDestroy()
   {
     $newTask = self::createTask();
-    $this->assertTrue(self::$client->tasks->destroy($newTask['id']));
- 
+    $this->assertTrue(self::$client->tasks->destroy($newTask['id'])); 
   }
 }  

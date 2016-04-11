@@ -35,38 +35,35 @@ class DealsServiceTest extends TestCase
 
   public function testAll()
   {
-    $deals = self::$client->deals->all(['page' => 1]);
+    $has_more = null;
+    $deals    = self::$client->deals->all(['page' => 1], $has_more);
     $this->assertInternalType('array', $deals);
- 
+    $this->assertNotNull( $has_more, '$has_more flag not modified' );
   }
 
   public function testCreate()
   {
     $this->assertInternalType('array', self::$deal);
-    $this->assertGreaterThanOrEqual(1, count(self::$deal));
- 
+    $this->assertGreaterThanOrEqual(1, count(self::$deal)); 
   }
 
   public function testGet()
   {
     $foundDeal = self::$client->deals->get(self::$deal['id']);
     $this->assertInternalType('array', $foundDeal);
-    $this->assertEquals($foundDeal['id'], self::$deal['id']);
- 
+    $this->assertEquals($foundDeal['id'], self::$deal['id']); 
   }
 
   public function testUpdate()
   {
     $updatedDeal = self::$client->deals->update(self::$deal['id'], self::$deal);
     $this->assertInternalType('array', $updatedDeal);
-    $this->assertEquals($updatedDeal['id'], self::$deal['id']);
- 
+    $this->assertEquals($updatedDeal['id'], self::$deal['id']); 
   }
 
   public function testDestroy()
   {
     $newDeal = self::createDeal();
-    $this->assertTrue(self::$client->deals->destroy($newDeal['id']));
- 
+    $this->assertTrue(self::$client->deals->destroy($newDeal['id'])); 
   }
 }  

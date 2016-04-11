@@ -16,7 +16,6 @@ class AccountsServiceTest extends TestCase
   public function testSelf()
   {
     $resource = self::$client->accounts->self();
-    $this->assertInternalType('array', $resource);
- 
+    $this->assertInternalType('array', $resource); 
   }
 }  

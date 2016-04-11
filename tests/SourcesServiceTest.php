@@ -35,38 +35,35 @@ class SourcesServiceTest extends TestCase
 
   public function testAll()
   {
-    $sources = self::$client->sources->all(['page' => 1]);
+    $has_more = null;
+    $sources  = self::$client->sources->all(['page' => 1], $has_more);
     $this->assertInternalType('array', $sources);
- 
+    $this->assertNotNull( $has_more, '$has_more flag not modified' );
   }
 
   public function testCreate()
   {
     $this->assertInternalType('array', self::$source);
-    $this->assertGreaterThanOrEqual(1, count(self::$source));
- 
+    $this->assertGreaterThanOrEqual(1, count(self::$source)); 
   }
 
   public function testGet()
   {
     $foundSource = self::$client->sources->get(self::$source['id']);
     $this->assertInternalType('array', $foundSource);
-    $this->assertEquals($foundSource['id'], self::$source['id']);
- 
+    $this->assertEquals($foundSource['id'], self::$source['id']); 
   }
 
   public function testUpdate()
   {
     $updatedSource = self::$client->sources->update(self::$source['id'], self::$source);
     $this->assertInternalType('array', $updatedSource);
-    $this->assertEquals($updatedSource['id'], self::$source['id']);
- 
+    $this->assertEquals($updatedSource['id'], self::$source['id']); 
   }
 
   public function testDestroy()
   {
     $newSource = self::createSource();
-    $this->assertTrue(self::$client->sources->destroy($newSource['id']));
- 
+    $this->assertTrue(self::$client->sources->destroy($newSource['id'])); 
   }
 }  
