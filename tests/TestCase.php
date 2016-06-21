@@ -9,6 +9,7 @@ use Exception;
 class TestCase extends \PHPUnit_Framework_TestCase
 {
   protected static $accessToken = null;
+  protected static $baseUrl = null;
   protected static $client = null;
 
   protected static $account = null;
@@ -26,8 +27,10 @@ class TestCase extends \PHPUnit_Framework_TestCase
   public static function setUpBeforeClass()
   {
     self::$accessToken = self::getAccessToken();
+    self::$baseUrl = self::getBaseUrl();
     self::$client = new Client([
       'accessToken' => self::$accessToken,
+      'baseUrl' => self::$baseUrl,
       'userAgent' => "BaseCRM/v2 PHP/" . Configuration::VERSION . '+tests',
       'verbose' => true,
     ]);
@@ -53,6 +56,13 @@ class TestCase extends \PHPUnit_Framework_TestCase
     $token = getenv("BASECRM_ACCESS_TOKEN");
     if (!$token) throw new Exception('"BASECRM_ACCESS_TOKEN" environment variable has not been found.');
     return $token;
+  }
+
+  protected static function getBaseUrl()
+  {
+    $url = getenv("BASECRM_BASE_URL");
+    if(!$url) $url = "https://api.getbase.com";
+    return $url;
   }
 
   protected static function createAssociatedContact(array $attributes = [])
