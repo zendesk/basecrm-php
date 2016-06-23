@@ -121,6 +121,10 @@ class TestCase extends \PHPUnit_Framework_TestCase
       'value' => "11.12",
       'contact_id' => self::createContact()['id'],
     ];
+
+    $originalClient = self::$client;
+    self::$client = ""; #$this->getMock('\BaseCRM\Client');
+
     $deal = self::$client->deals->create(array_merge($deal, $attributes));
 
     return $deal;
