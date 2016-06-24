@@ -1,5 +1,12 @@
 ## CHANGELOG
 
+### 1.2.0 (2016-07-24)
+
+**Features and Improvements**
+
+* Support for decimal deal values [#15](https://github.com/basecrm/basecrm-php/pull/15)
+* Deal values are now Floats [#15](https://github.com/basecrm/basecrm-php/pull/15)
+
 ### v1.1.2 (2016-02-26)
 
 **Features and Improvements**

@@ -40,7 +40,8 @@ class DealsService
   public function all($options = [])
   {
     list($code, $deals) = $this->httpClient->get("/deals", $options);
-    return $deals;  
+    $dealsData = array_map(array($this, 'coerceNestedDealData'), $deals);
+    return $deals;
   }
 
   /**
@@ -60,6 +61,7 @@ class DealsService
     if (isset($attributes['custom_fields']) && empty($attributes['custom_fields'])) unset($attributes['custom_fields']);
  
     list($code, $createdDeal) = $this->httpClient->post("/deals", $attributes);
+    $createdDeal = $this->coerceDealData($createdDeal);
     return $createdDeal; 
   }
 
@@ -78,6 +80,7 @@ class DealsService
   public function get($id)
   {
     list($code, $deal) = $this->httpClient->get("/deals/{$id}");
+    $deal = $this->coerceDealData($deal);
     return $deal;
   }
  
@@ -104,6 +107,7 @@ class DealsService
     if (isset($attributes['custom_fields']) && empty($attributes['custom_fields'])) unset($attributes['custom_fields']);
  
     list($code, $updatedDeal) = $this->httpClient->put("/deals/{$id}", $attributes);
+    $updatedDeal = $this->coerceDealData($updatedDeal);
     return $updatedDeal; 
   }
 
@@ -124,5 +128,18 @@ class DealsService
   {
     list($code, $payload) = $this->httpClient->delete("/deals/{$id}");
     return $code == 204;
+  }
+
+  private function coerceNestedDealData(array $nestedDeal)
+  {
+    $rawDeal = $this->coerceDealData($nestedDeal['data']);
+    $nestedDeal['data'] = $rawDeal;
+    return $nestedDeal;
+  }
+
+  private function coerceDealData(array $deal)
+  {
+    $deal['value'] = Coercion::toFloatValue($deal['value']);
+    return $deal;
   }
 }
