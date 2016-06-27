@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 1.2.0 (2016-07-24)
+### v1.2.0 (2016-07-24)
 
 **Features and Improvements**
 
