@@ -60,6 +60,7 @@ class DealsService
     $attributes = array_intersect_key($deal, array_flip(self::$keysToPersist));
     if (isset($attributes['custom_fields']) && empty($attributes['custom_fields'])) unset($attributes['custom_fields']);
  
+    $attributes["value"] = Coercion::toFloatValue($attributes['value']);
     list($code, $createdDeal) = $this->httpClient->post("/deals", $attributes);
     $createdDeal = $this->coerceDealData($createdDeal);
     return $createdDeal; 
@@ -105,7 +106,8 @@ class DealsService
   {
     $attributes = array_intersect_key($deal, array_flip(self::$keysToPersist)); 
     if (isset($attributes['custom_fields']) && empty($attributes['custom_fields'])) unset($attributes['custom_fields']);
- 
+    $attributes["value"] = Coercion::toFloatValue($attributes['value']);
+
     list($code, $updatedDeal) = $this->httpClient->put("/deals/{$id}", $attributes);
     $updatedDeal = $this->coerceDealData($updatedDeal);
     return $updatedDeal; 

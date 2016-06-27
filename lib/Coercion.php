@@ -22,5 +22,16 @@ class Coercion
     $newValue = round((float) $value, 2);
     return $newValue;
   }
+
+  /**
+   * Coerce deal value to float with two decimal places
+   *
+   *  @param $value Deal value
+   */
+  public static function toStringValue($value = 0)
+  {
+    $newValue = (string) $value;
+    return $newValue;
+  }
 }
 
