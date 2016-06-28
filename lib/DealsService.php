@@ -41,7 +41,7 @@ class DealsService
   {
     list($code, $deals) = $this->httpClient->get("/deals", $options);
     $dealsData = array_map(array($this, 'coerceNestedDealData'), $deals);
-    return $deals;
+    return $dealsData;
   }
 
   /**
