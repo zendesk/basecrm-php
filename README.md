@@ -237,6 +237,15 @@ Actions:
 * Update a deal - `client->deals->update`
 * Delete a deal - `client->deals->destroy`
 
+**Note about deal value**
+
+You can use either a string or numerical deal value when modifying a deal.
+```php
+$deal['value'] = 10;
+$deal['value'] = 10.10;
+$deal['value'] = "10.10";
+```
+
 ### Lead
 
 ```php
