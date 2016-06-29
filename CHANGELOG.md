@@ -1,5 +1,12 @@
 ## CHANGELOG
 
+### v1.2.1 (2016-06-29)
+
+**Bug Fixes**
+* Fixed incorrect return in Deal Service
+
+**Important:** Deal value type has been changed to float (since v1.2.0)
+
 ### v1.2.0 (2016-07-24)
 
 **Features and Improvements**
