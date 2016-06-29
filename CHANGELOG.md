@@ -7,7 +7,7 @@
 
 **Important:** Deal value type has been changed to float (since v1.2.0)
 
-### v1.2.0 (2016-07-24)
+### v1.2.0 (2016-06-24)
 
 **Features and Improvements**
 
