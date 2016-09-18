@@ -72,7 +72,7 @@ class Configuration
     if (preg_match('/\s/', $this->accessToken))
     {
       $msg = 'Provided access token is invalid '
-        . 'as it contains disallowed chracters. '
+        . 'as it contains disallowed characters. '
         . 'Please double-check your access token.';
       throw new Errors\ConfigurationError($msg);
     } 
