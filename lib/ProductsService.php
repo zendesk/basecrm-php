@@ -40,7 +40,8 @@ class ProductsService
   public function all($options = [])
   {
     list($code, $products) = $this->httpClient->get("/products", $options);
-    return $products;
+    $productsData = array_map(array($this, 'coerceNestedProductData'), $products);
+    return $productsData;
   }
 
   /**
@@ -58,7 +59,10 @@ class ProductsService
   {
     $attributes = array_intersect_key($product, array_flip(self::$keysToPersist));
 
+    $attributes['cost'] = Coercion::toStringValue($attributes['cost']);
+    $attributes['prices'] = array_map(function($val) { $val['amount'] = Coercion::toStringValue($val['amount']); return $val; }, $attributes['prices']);
     list($code, $createdProduct) = $this->httpClient->post("/products", $attributes);
+    $createdProduct = $this->coerceProductData($createdProduct);
     return $createdProduct;
   }
 
@@ -77,6 +81,7 @@ class ProductsService
   public function get($id)
   {
     list($code, $product) = $this->httpClient->get("/products/{$id}");
+    $product = $this->coerceProductData($product);
     return $product;
   }
 
@@ -101,6 +106,7 @@ class ProductsService
     $attributes = array_intersect_key($product, array_flip(self::$keysToPersist));
 
     list($code, $updatedProduct) = $this->httpClient->put("/products/{$id}", $attributes);
+    $updatedProduct = $this->coerceProductData($updatedProduct);
     return $updatedProduct;
   }
 
@@ -123,5 +129,31 @@ class ProductsService
   {
     list($code, $payload) = $this->httpClient->delete("/products/{$id}");
     return $code == 204;
+  }
+
+  private function coerceNestedProductData(array $nestedProduct)
+  {
+    $rawProduct = $this->coerceProductData($nestedProduct['data']);
+    $nestedProduct['data'] = $rawProduct;
+    return $nestedProduct;
+  }
+
+  private function coerceProductData(array $product)
+  {
+    $product['cost'] = Coercion::toFloatValue($product['value']);
+    $product['prices'] = array_map(array($this, 'coerceProductPrice'), $product['prices']);
+    return $product;
+  }
+
+  private function coerceProductPrice(array $price)
+  {
+    $price['amount'] = Coercion::toFloatValue($price['amount']);
+    return $price;
+  }
+
+  private function coerceToStringProductPrice(array $price)
+  {
+    $price['amount'] = Coercion::toStringValue($price['amount']);
+    return $price;
   }
 }
