@@ -12,7 +12,7 @@ namespace BaseCRM;
 class ProductsService
 {
   // @var array Allowed attribute names.
-  protected static $keysToPersist = ['name', 'sku', 'active', 'cost', 'cost_currency', 'prices'];
+  protected static $keysToPersist = ['name', 'description', 'sku', 'active', 'cost', 'cost_currency', 'prices', 'max_discount', 'max_markup'];
 
   protected $httpClient;
 
