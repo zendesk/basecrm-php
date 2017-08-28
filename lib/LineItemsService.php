@@ -40,8 +40,9 @@ class LineItemsService
    */
   public function all($order_id, $options = [])
   {
-    list($code, $line_items) = $this->httpClient->get("/orders/{$order_id}/line_items", $options);
-    return $line_items;
+    list($code, $lineItems) = $this->httpClient->get("/orders/{$order_id}/line_items", $options);
+    $lineItemsData = array_map(array($this, 'coerceNestedLineItemData'), $lineItems);
+    return $lineItemsData;
   }
 
   /**
@@ -62,7 +63,10 @@ class LineItemsService
   {
     $attributes = array_intersect_key($lineItem, array_flip(self::$keysToPersist));
 
+    $attributes['value'] = Coercion::toStringValue($attributes['value']);
+    $attributes['variation'] = Coercion::toStringValue($attributes['variation']);
     list($code, $createdLineItem) = $this->httpClient->post("/orders/{$order_id}/line_items", $attributes);
+    $createdLineItem = $this->coerceLineItemData($createdLineItem);
     return $createdLineItem;
   }
 
@@ -80,8 +84,9 @@ class LineItemsService
    */
   public function get($order_id, $id)
   {
-    list($code, $line_item) = $this->httpClient->get("/orders/{$order_id}/line_items/{$id}");
-    return $line_item;
+    list($code, $lineItem) = $this->httpClient->get("/orders/{$order_id}/line_items/{$id}");
+    $lineItem = $this->coerceLineItemData($lineItem);
+    return $lineItem;
   }
 
   /**
@@ -101,5 +106,20 @@ class LineItemsService
   {
     list($code, $payload) = $this->httpClient->delete("/orders/{$order_id}/line_items/{$id}");
     return $code == 204;
+  }
+
+  private function coerceNestedLineItemData(array $nestedLineItem)
+  {
+    $rawLineItem = $this->coerceLineItemData($nestedLineItem['data']);
+    $nestedLineItem['data'] = $rawLineItem;
+    return $nestedLineItem;
+  }
+
+  private function coerceLineItemData(array $lineItem)
+  {
+    $lineItem['value'] = Coercion::toFloatValue($lineItem['value']);
+    $lineItem['variation'] = Coercion::toFloatValue($lineItem['variation']);
+    $lineItem['price'] = Coercion::toFloatValue($lineItem['price']);
+    return $lineItem;
   }
 }
