@@ -140,7 +140,7 @@ class ProductsService
 
   private function coerceProductData(array $product)
   {
-    $product['cost'] = Coercion::toFloatValue($product['value']);
+    $product['cost'] = Coercion::toFloatValue($product['cost']);
     $product['prices'] = array_map(array($this, 'coerceProductPrice'), $product['prices']);
     return $product;
   }
