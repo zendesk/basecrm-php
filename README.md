@@ -246,6 +246,20 @@ $deal['value'] = 10.10;
 $deal['value'] = "10.10";
 ```
 
+### Deal Source
+
+```php
+$client = new \BaseCRM\Client(['accessToken' => '<YOUR_PERSONAL_ACCESS_TOKEN>');
+$client->dealSources // => \BaseCRM\DealSourcesService
+```
+
+Actions:
+* Retrieve all deal sources - `client->dealSources->all`
+* Create a deal source - `client->dealSources->create`
+* Retrieve a single deal source - `client->dealSources->get`
+* Update a deal source - `client->dealSources->update`
+* Delete a deal source - `client->dealSources->destroy`
+
 ### Lead
 
 ```php
@@ -259,6 +273,35 @@ Actions:
 * Retrieve a single lead - `client->leads->get`
 * Update a lead - `client->leads->update`
 * Delete a lead - `client->leads->destroy`
+
+### Lead Source
+
+```php
+$client = new \BaseCRM\Client(['accessToken' => '<YOUR_PERSONAL_ACCESS_TOKEN>');
+$client->leadSources // => \BaseCRM\LeadSourcesService
+```
+
+Actions:
+* Retrieve all lead sources - `client->leadSources->all`
+* Create a lead source - `client->leadSources->create`
+* Retrieve a single lead source - `client->leadSources->get`
+* Update a lead source - `client->leadSources->update`
+* Delete a lead source - `client->leadSources->destroy`
+
+### Line Item
+
+```php
+$client = new \BaseCRM\Client(['accessToken' => '<YOUR_PERSONAL_ACCESS_TOKEN>');
+$client->lineItems // => \BaseCRM\LineItemsService
+```
+
+Actions:
+* Retrieve all line items - `client->lineItems->all`
+* Create a line item - `client->lineItems->create`
+* Retrieve a single line item- `client->lineItems->get`
+* Update a line item - `client->lineItems->update`
+* Delete a line item - `client->lineItems->destroy`
+
 
 ### LossReason
 
@@ -288,6 +331,20 @@ Actions:
 * Update a note - `client->notes->update`
 * Delete a note - `client->notes->destroy`
 
+### Order
+
+```php
+$client = new \BaseCRM\Client(['accessToken' => '<YOUR_PERSONAL_ACCESS_TOKEN>');
+$client->orders // => \BaseCRM\OrdersService
+```
+
+Actions:
+* Retrieve all orders - `client->orders->all`
+* Create an order - `client->orders->create`
+* Retrieve a single order - `client->orders->get`
+* Update an order - `client->orders->update`
+* Delete an order - `client->orders->destroy`
+
 ### Pipeline
 
 ```php
@@ -298,7 +355,21 @@ $client->pipelines // => \BaseCRM\PipelinesService
 Actions:
 * Retrieve all pipelines - `client->pipelines->all`
 
-### Source
+### Product
+
+```php
+$client = new \BaseCRM\Client(['accessToken' => '<YOUR_PERSONAL_ACCESS_TOKEN>');
+$client->products // => \BaseCRM\ProductsService
+```
+
+Actions:
+* Retrieve all products - `client->products->all`
+* Create a product - `client->products->create`
+* Retrieve a single product - `client->products->get`
+* Update a product - `client->products->update`
+* Delete a product - `client->products->destroy`
+
+### Source (Deprecated! Use Lead Source, Deal Source instead)
 
 ```php
 $client = new \BaseCRM\Client(['accessToken' => '<YOUR_PERSONAL_ACCESS_TOKEN>');
