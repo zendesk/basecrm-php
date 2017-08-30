@@ -51,11 +51,32 @@ class Client
   public $deals;
 
   /**
+   * @var \BaseCRM\DealSourcesService Access all DealSources related actions.
+   * @see \BaseCRM\DealSourcesService
+   * @see \BaseCRM\DealSource
+   */
+  public $dealSources;
+
+  /**
    * @var \BaseCRM\LeadsService Access all Leads related actions.
    * @see \BaseCRM\LeadsService
    * @see \BaseCRM\Lead
    */
   public $leads;
+
+  /**
+   * @var \BaseCRM\LeadSourcesService Access all LeadSources related actions.
+   * @see \BaseCRM\LeadSourcesService
+   * @see \BaseCRM\LeadSource
+   */
+  public $leadSources;
+
+  /**
+   * @var \BaseCRM\LineItemsService Access all LineItems related actions.
+   * @see \BaseCRM\LineItemsService
+   * @see \BaseCRM\LineItem
+   */
+  public $lineItems;
 
   /**
    * @var \BaseCRM\LossReasonsService Access all LossReasons related actions.
@@ -72,11 +93,25 @@ class Client
   public $notes;
 
   /**
+   * @var \BaseCRM\OrdersService Access all Orders related actions.
+   * @see \BaseCRM\OrdersService
+   * @see \BaseCRM\Order
+   */
+  public $orders;
+
+  /**
    * @var \BaseCRM\PipelinesService Access all Pipelines related actions.
    * @see \BaseCRM\PipelinesService
    * @see \BaseCRM\Pipeline
    */
   public $pipelines;
+
+  /**
+   * @var \BaseCRM\ProductsService Access all Products related actions.
+   * @see \BaseCRM\ProductsService
+   * @see \BaseCRM\Product
+   */
+  public $products;
 
   /**
    * @var \BaseCRM\SourcesService Access all Sources related actions.
@@ -153,10 +188,15 @@ class Client
     $this->associatedContacts = new AssociatedContactsService($this->httpClient);
     $this->contacts = new ContactsService($this->httpClient);
     $this->deals = new DealsService($this->httpClient);
+    $this->dealSources = new DealSourcesService($this->httpClient);
     $this->leads = new LeadsService($this->httpClient);
+    $this->leadSources = new LeadSourcesService($this->httpClient);
+    $this->lineItems = new LineItemsService($this->httpClient);
     $this->lossReasons = new LossReasonsService($this->httpClient);
     $this->notes = new NotesService($this->httpClient);
+    $this->orders = new OrdersService($this->httpClient);
     $this->pipelines = new PipelinesService($this->httpClient);
+    $this->products = new ProductsService($this->httpClient);
     $this->sources = new SourcesService($this->httpClient);
     $this->stages = new StagesService($this->httpClient);
     $this->tags = new TagsService($this->httpClient);

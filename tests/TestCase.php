@@ -16,9 +16,14 @@ class TestCase extends \PHPUnit_Framework_TestCase
   protected static $associatedContact = null;
   protected static $contact = null;
   protected static $deal = null;
+  protected static $dealSource = null;
   protected static $lead = null;
+  protected static $leadSource = null;
+  protected static $lineItem = null;
   protected static $lossReason = null;
   protected static $note = null;
+  protected static $order = null;
+  protected static $product = null;
   protected static $source = null;
   protected static $tag = null;
   protected static $task = null;
@@ -34,14 +39,19 @@ class TestCase extends \PHPUnit_Framework_TestCase
       'userAgent' => "BaseCRM/v2 PHP/" . Configuration::VERSION . '+tests',
       'verbose' => true,
     ]);
-    
+
     self::$account = self::$client->accounts->self();
     self::$associatedContact = self::createAssociatedContact();
     self::$contact = self::createContact();
     self::$deal = self::createDeal();
+    self::$dealSource = self::createDealSource();
     self::$lead = self::createLead();
+    self::$leadSource = self::createLeadSource();
+    self::$lineItem = self::createLineItem();
     self::$lossReason = self::createLossReason();
     self::$note = self::createNote();
+    self::$order = self::createOrder();
+    self::$product = self::createProduct();
     self::$source = self::createSource();
     self::$tag = self::createTag();
     self::$task = self::createTask();
@@ -140,6 +150,17 @@ class TestCase extends \PHPUnit_Framework_TestCase
     return $deal;
   }
 
+  protected static function createDealSource(array $attributes = [])
+  {
+    $dealSource = [
+      'name' => 'inbound marketing' . rand(),
+      'resource_type' => 'deal'
+    ];
+    $dealSource = self::$client->dealSources->create(array_merge($dealSource, $attributes));
+
+    return $dealSource;
+  }
+
   protected static function createLead(array $attributes = [])
   {
     $lead = [
@@ -165,6 +186,17 @@ class TestCase extends \PHPUnit_Framework_TestCase
     return $lead;
   }
 
+  protected static function createLeadSource(array $attributes = [])
+  {
+    $leadSource = [
+      'name' => 'outbound marketing' . rand(),
+      'resource_type' => 'lead'
+    ];
+    $leadSource = self::$client->leadSources->create(array_merge($leadSource, $attributes));
+
+    return $leadSource;
+  }
+
   protected static function createLossReason(array $attributes = [])
   {
     $lossReason = [
@@ -174,6 +206,24 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
     return $lossReason;
   }
+
+  protected static function createLineItem(array $attributes = [])
+  {
+    $orderId = self::createOrder()['id'];
+    $product = self::createProduct();
+
+    $lineItem = [
+      'product_id' => $product['id'],
+      'currency' => 'USD',
+      'variation' => '-19.99',
+      'quantity' => 1,
+      'value' => '80.00'
+    ];
+    $lineItem = self::$client->lineItems->create($orderId, array_merge($lineItem, $attributes));
+    $lineItem['order_id'] = $orderId;
+
+    return $lineItem;
+}
 
   protected static function createNote(array $attributes = [])
   {
@@ -185,6 +235,39 @@ class TestCase extends \PHPUnit_Framework_TestCase
     $note = self::$client->notes->create(array_merge($note, $attributes));
 
     return $note;
+  }
+
+  protected static function createOrder(array $attributes = [])
+  {
+    $order = [
+      'deal_id' => self::createDeal()['id'],
+      'discount' => 20,
+    ];
+    $order = self::$client->orders->create(array_merge($order, $attributes));
+
+    return $order;
+  }
+
+  protected static function createProduct(array $attributes = [])
+  {
+    $price = [
+      'amount' => '99.99',
+      'currency'=> 'USD'
+    ];
+    $product = [
+      'name' => 'Product' . rand(),
+      'description' => 'product description',
+      'sku' => 'product-sku',
+      'active' => true,
+      'cost' => '99.99',
+      'cost_currency' => 'USD',
+      'max_discount' => 100,
+      'max_markup' => 80,
+      'prices' => [$price]
+    ];
+    $product = self::$client->products->create(array_merge($product, $attributes));
+
+    return $product;
   }
 
   protected static function createSource(array $attributes = [])

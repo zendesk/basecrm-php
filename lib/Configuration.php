@@ -3,8 +3,8 @@ namespace BaseCRM;
 
 class Configuration
 {
-  // @version 1.1.1 Current stable version.
-  const VERSION = "1.2.0";
+  // @version 1.3.0 Current stable version.
+  const VERSION = "1.3.0";
 
   const PRODUCTION_URL = "https://api.getbase.com";
   const URL_REGEXP = "/\b(?:(?:https?|http):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i";
@@ -72,7 +72,7 @@ class Configuration
     if (preg_match('/\s/', $this->accessToken))
     {
       $msg = 'Provided access token is invalid '
-        . 'as it contains disallowed chracters. '
+        . 'as it contains disallowed characters. '
         . 'Please double-check your access token.';
       throw new Errors\ConfigurationError($msg);
     } 

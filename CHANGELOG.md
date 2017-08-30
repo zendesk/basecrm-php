@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### v1.3.0 (2017-08-28)
+
+**Features and Improvements**
+  * Support for resources: Lead Source, Deal Source, Product, Order, Line Item
+
 ### v1.2.1 (2016-06-29)
 
 **Bug Fixes**
