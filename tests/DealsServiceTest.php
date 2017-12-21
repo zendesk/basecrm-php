@@ -63,6 +63,16 @@ class DealsServiceTest extends TestCase
  
   }
 
+  public function testUpdateWithoutProvidingDealValue()
+  {
+      $initialDealValue = self::$deal['value'];
+      unset(self::$deal['value']);
+      $updatedDeal = self::$client->deals->update(self::$deal['id'], self::$deal);
+      $this->assertInternalType('array', $updatedDeal);
+      $this->assertEquals($updatedDeal['id'], self::$deal['id']);
+      $this->assertEquals($updatedDeal['value'], $initialDealValue);
+  }
+
   public function testDestroy()
   {
     $newDeal = self::createDeal();
