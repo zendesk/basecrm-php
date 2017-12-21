@@ -3,8 +3,8 @@ namespace BaseCRM;
 
 class Configuration
 {
-  // @version 1.3.0 Current stable version.
-  const VERSION = "1.3.0";
+  // @version 1.3.1 Current stable version.
+  const VERSION = "1.3.1";
 
   const PRODUCTION_URL = "https://api.getbase.com";
   const URL_REGEXP = "/\b(?:(?:https?|http):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i";
