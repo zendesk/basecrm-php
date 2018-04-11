@@ -1,5 +1,5 @@
 <?php
-namespace BaseCRM
+namespace BaseCRM;
 
 class CoercionTest extends \PHPUnit_Framework_TestCase
 {
