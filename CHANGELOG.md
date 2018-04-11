@@ -1,10 +1,15 @@
 ## CHANGELOG
 
+### v1.3.2 (2018-04-11)
+
+**Features and Improvements**
+  * Support for resources: Deal Unqualified Reason, Lead Unqualified Reason
+
 ### v1.3.1 (2017-12-22)
 
 **Features and Improvements**
   * Fixed issue where could not update deal without passing value
-  
+
 ### v1.3.0 (2017-08-28)
 
 **Features and Improvements**
@@ -47,7 +52,7 @@
 
 **Features and Improvements**
 
-* `\BaseCRM\HttpClient` methods accept additional `$options` 
+* `\BaseCRM\HttpClient` methods accept additional `$options`
 * Sync API support
   * New low-level`\BaseCRM\SyncService`
   * High-level `\BaseCRM\Sync` wrapper

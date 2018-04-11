@@ -3,8 +3,8 @@ namespace BaseCRM;
 
 class Configuration
 {
-  // @version 1.3.1 Current stable version.
-  const VERSION = "1.3.1";
+  // @version 1.3.2 Current stable version.
+  const VERSION = "1.3.2";
 
   const PRODUCTION_URL = "https://api.getbase.com";
   const URL_REGEXP = "/\b(?:(?:https?|http):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i";
@@ -14,16 +14,16 @@ class Configuration
 
   // @var string Base url for the api.
   public $baseUrl;
-  
+
   // @var string Client user agent.
   public $userAgent;
-  
+
   // @var integer Request timeout.
   public $timeout;
-  
+
   // @var boolean Whether to verify ssl or not.
   public $verifySSL;
-  
+
   // @var boolean Verbose/debug mode.
   public $verbose;
 
@@ -75,7 +75,7 @@ class Configuration
         . 'as it contains disallowed characters. '
         . 'Please double-check your access token.';
       throw new Errors\ConfigurationError($msg);
-    } 
+    }
 
     if (strlen($this->accessToken) != 64)
     {
@@ -105,6 +105,6 @@ class Configuration
     $msg = 'No access token provided. '
       . 'Set your access token during client initialization using: '
       . '"new \\BaseCRM\\Client([\'accessToken\' => \'<YOUR_PERSONAL_ACCCESS_TOKEN\'])"';
-    return $msg; 
+    return $msg;
   }
 }
