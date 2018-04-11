@@ -17,8 +17,10 @@ class TestCase extends \PHPUnit_Framework_TestCase
   protected static $contact = null;
   protected static $deal = null;
   protected static $dealSource = null;
+  protected static $dealUnqualifiedReason = null;
   protected static $lead = null;
   protected static $leadSource = null;
+  protected static $leadUnqualifiedReason = null;
   protected static $lineItem = null;
   protected static $lossReason = null;
   protected static $note = null;
@@ -45,6 +47,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     self::$contact = self::createContact();
     self::$deal = self::createDeal();
     self::$dealSource = self::createDealSource();
+    self::$dealUnqualifiedReason = self::createDealUnqualifiedReason();
     self::$lead = self::createLead();
     self::$leadSource = self::createLeadSource();
     self::$lineItem = self::createLineItem();
@@ -164,7 +167,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
   protected static function createDealUnqualifiedReason(array $attributes = [])
   {
     $dealUnqualifiedReason = [
-      'name' => 'We were too expensive' . rand(),
+      'name' => 'Reason of unqualifying deal' . rand(),
     ];
     $dealUnqualifiedReason = self::$client->dealUnqualifiedReasons->create(array_merge($dealUnqualifiedReason, $attributes));
 
