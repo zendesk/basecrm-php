@@ -161,6 +161,16 @@ class TestCase extends \PHPUnit_Framework_TestCase
     return $dealSource;
   }
 
+  protected static function createDealUnqualifiedReason(array $attributes = [])
+  {
+    $dealUnqualifiedReason = [
+      'name' => 'We were too expensive' . rand(),
+    ];
+    $dealUnqualifiedReason = self::$client->dealUnqualifiedReasons->create(array_merge($dealUnqualifiedReason, $attributes));
+
+    return $dealUnqualifiedReason;
+  }
+
   protected static function createLead(array $attributes = [])
   {
     $lead = [

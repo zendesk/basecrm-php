@@ -32,6 +32,11 @@ class ClientTest extends TestCase
     $this->assertTrue(property_exists(self::$client, 'dealSources'));
   }
 
+  public function testDealUnqualifiedReasonPropertyExists()
+  {
+    $this->assertTrue(property_exists(self::$client, 'dealUnqualifiedReasons'));
+  }
+
   public function testLeadPropertyExists()
   {
     $this->assertTrue(property_exists(self::$client, 'leads'));
@@ -40,6 +45,11 @@ class ClientTest extends TestCase
   public function testLeadSourcePropertyExists()
   {
     $this->assertTrue(property_exists(self::$client, 'leadSources'));
+  }
+
+  public function testLeadUnqualifiedReasonPropertyExists()
+  {
+    $this->assertTrue(property_exists(self::$client, 'leadUnqualifiedReasons'));
   }
 
   public function testLineItemPropertyExists()
