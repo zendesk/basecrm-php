@@ -6,7 +6,7 @@ namespace BaseCRM;
  * BaseCRM\StagesService
  *
  * Class used to make actions related to Stage resource.
- * 
+ *
  * @package BaseCRM
  */
 class StagesService
@@ -27,16 +27,16 @@ class StagesService
    * Retrieve all stages
    *
    * get '/stages'
-   * 
+   *
    * Returns all stages available to the user, according to the parameters provided
    *
    * @param array $options Search options
-   * 
+   *
    * @return array The list of Stages for the first page, unless otherwise specified.
    */
   public function all($options = [])
   {
     list($code, $stages) = $this->httpClient->get("/stages", $options);
-    return $stages;  
+    return $stages;
   }
 }

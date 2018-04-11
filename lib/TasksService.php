@@ -6,7 +6,7 @@ namespace BaseCRM;
  * BaseCRM\TasksService
  *
  * Class used to make actions related to Task resource.
- * 
+ *
  * @package BaseCRM
  */
 class TasksService
@@ -30,26 +30,26 @@ class TasksService
    * Retrieve all tasks
    *
    * get '/tasks'
-   * 
+   *
    * Returns all tasks available to the user, according to the parameters provided
    * If you ask for tasks without any parameter provided Base API will return you both **floating** and **related** tasks
    * Although you can narrow the search set to either of them via query parameters
    *
    * @param array $options Search options
-   * 
+   *
    * @return array The list of Tasks for the first page, unless otherwise specified.
    */
   public function all($options = [])
   {
     list($code, $tasks) = $this->httpClient->get("/tasks", $options);
-    return $tasks;  
+    return $tasks;
   }
 
   /**
    * Create a task
    *
    * post '/tasks'
-   * 
+   *
    * Creates a new task
    * You can create either a **floating** task or create a **related** task and associate it with one of the resource types below:
    * * [Leads](/docs/rest/reference/leads)
@@ -57,27 +57,27 @@ class TasksService
    * * [Deals](/docs/rest/reference/deals)
    *
    * @param array $task This array's attributes describe the object to be created.
-   * 
+   *
    * @return array The resulting object representing created resource.
    */
   public function create(array $task)
   {
     $attributes = array_intersect_key($task, array_flip(self::$keysToPersist));
- 
+
     list($code, $createdTask) = $this->httpClient->post("/tasks", $attributes);
-    return $createdTask; 
+    return $createdTask;
   }
 
   /**
    * Retrieve a single task
    *
    * get '/tasks/{id}'
-   * 
+   *
    * Returns a single task available to the user according to the unique task ID provided
    * If the specified task does not exist, this query will return an error
    *
    * @param integer $id Unique identifier of a Task
-   * 
+   *
    * @return array Searched Task.
    */
   public function get($id)
@@ -85,39 +85,39 @@ class TasksService
     list($code, $task) = $this->httpClient->get("/tasks/{$id}");
     return $task;
   }
- 
+
   /**
    * Update a task
    *
    * put '/tasks/{id}'
-   * 
+   *
    * Updates task information
    * If the specified task does not exist, this query will return an error
    *
    * @param integer $id Unique identifier of a Task
    * @param array $task This array's attributes describe the object to be updated.
-   * 
+   *
    * @return array The resulting object representing updated resource.
    */
   public function update($id, array $task)
   {
-    $attributes = array_intersect_key($task, array_flip(self::$keysToPersist)); 
- 
+    $attributes = array_intersect_key($task, array_flip(self::$keysToPersist));
+
     list($code, $updatedTask) = $this->httpClient->put("/tasks/{$id}", $attributes);
-    return $updatedTask; 
+    return $updatedTask;
   }
 
   /**
    * Delete a task
    *
    * delete '/tasks/{id}'
-   * 
+   *
    * Delete an existing task
    * If the specified task does not exist, this query will return an error
    * This operation cannot be undone
    *
    * @param integer $id Unique identifier of a Task
-   * 
+   *
    * @return boolean Status of the operation.
    */
   public function destroy($id)

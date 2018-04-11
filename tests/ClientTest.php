@@ -29,7 +29,7 @@ class ClientTest extends TestCase
 
   public function testDealSourcePropertyExists()
   {
-   $this->assertTrue(property_exists(self::$client, 'dealSources'));
+    $this->assertTrue(property_exists(self::$client, 'dealSources'));
   }
 
   public function testLeadPropertyExists()
@@ -39,12 +39,12 @@ class ClientTest extends TestCase
 
   public function testLeadSourcePropertyExists()
   {
-   $this->assertTrue(property_exists(self::$client, 'leadSources'));
+    $this->assertTrue(property_exists(self::$client, 'leadSources'));
   }
 
   public function testLineItemPropertyExists()
   {
-   $this->assertTrue(property_exists(self::$client, 'lineItems'));
+    $this->assertTrue(property_exists(self::$client, 'lineItems'));
   }
 
   public function testLossReasonPropertyExists()
@@ -59,7 +59,7 @@ class ClientTest extends TestCase
 
   public function testOrderPropertyExists()
   {
-   $this->assertTrue(property_exists(self::$client, 'orders'));
+    $this->assertTrue(property_exists(self::$client, 'orders'));
   }
 
   public function testPipelinePropertyExists()
@@ -69,7 +69,7 @@ class ClientTest extends TestCase
 
   public function testProductPropertyExists()
   {
-   $this->assertTrue(property_exists(self::$client, 'products'));
+    $this->assertTrue(property_exists(self::$client, 'products'));
   }
 
   public function testSourcePropertyExists()

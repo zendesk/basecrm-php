@@ -3,7 +3,7 @@ namespace BaseCRM;
 
 /**
  * BaseCRM\Client
- * 
+ *
  * The client is the entry point to all services and actions.
  *
  * @package   BaseCRM
@@ -13,7 +13,7 @@ class Client
 {
   /**
    * @var \BaseCRM\HttpClient Http client
-   * @ignore 
+   * @ignore
    */
   protected $httpClient;
 
@@ -149,19 +149,19 @@ class Client
   public $users;
 
   /**
-   * @var \BaseCRM\SyncService Access all Sync API related actions.
-   * @see \BaseCRM\SyncService
-   */
+  * @var \BaseCRM\SyncService Access all Sync API related actions.
+  * @see \BaseCRM\SyncService
+  */
   public $sync;
 
   /*
-   * Instantiate a new BaseCRM API V2 client. 
+   * Instantiate a new BaseCRM API V2 client.
    * Client accepts an array of configuration options.
-   * 
+   *
    * Here's an example of creating a client with an access token:
    *
    *  $client = new \BaseCRM\Client(["accessToken" => "YOUR_PERSONAL_ACCESS_TOKEN"]);
-   * 
+   *
    * @param array $config Client configuration settings
    *    - accessToken: Personal access token
    *    - baseUrl: Base url for the api. Default: "https://api.getbase.com"

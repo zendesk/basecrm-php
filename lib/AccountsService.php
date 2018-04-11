@@ -6,7 +6,7 @@ namespace BaseCRM;
  * BaseCRM\AccountsService
  *
  * Class used to make actions related to Account resource.
- * 
+ *
  * @package BaseCRM
  */
 class AccountsService
@@ -27,10 +27,10 @@ class AccountsService
    * Retrieve account details
    *
    * get '/accounts/self'
-   * 
+   *
    * Returns detailed information about your account
    *
-   * 
+   *
    * @return array Resource object.
    */
   public function self()

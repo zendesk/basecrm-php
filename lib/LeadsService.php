@@ -6,7 +6,7 @@ namespace BaseCRM;
  * BaseCRM\LeadsService
  *
  * Class used to make actions related to Lead resource.
- * 
+ *
  * @package BaseCRM
  */
 class LeadsService
@@ -30,29 +30,29 @@ class LeadsService
    * Retrieve all leads
    *
    * get '/leads'
-   * 
+   *
    * Returns all leads available to the user, according to the parameters provided
    *
    * @param array $options Search options
-   * 
+   *
    * @return array The list of Leads for the first page, unless otherwise specified.
    */
   public function all($options = [])
   {
     list($code, $leads) = $this->httpClient->get("/leads", $options);
-    return $leads;  
+    return $leads;
   }
 
   /**
    * Create a lead
    *
    * post '/leads'
-   * 
+   *
    * Creates a new lead
    * A lead may represent a single individual or an organization
    *
    * @param array $lead This array's attributes describe the object to be created.
-   * 
+   *
    * @return array The resulting object representing created resource.
    */
   public function create(array $lead)
@@ -61,19 +61,19 @@ class LeadsService
     if (isset($attributes['custom_fields']) && empty($attributes['custom_fields'])) unset($attributes['custom_fields']);
  
     list($code, $createdLead) = $this->httpClient->post("/leads", $attributes);
-    return $createdLead; 
+    return $createdLead;
   }
 
   /**
    * Retrieve a single lead
    *
    * get '/leads/{id}'
-   * 
+   *
    * Returns a single lead available to the user, according to the unique lead ID provided
    * If the specified lead does not exist, this query returns an error
    *
    * @param integer $id Unique identifier of a Lead
-   * 
+   *
    * @return array Searched Lead.
    */
   public function get($id)
@@ -81,12 +81,12 @@ class LeadsService
     list($code, $lead) = $this->httpClient->get("/leads/{$id}");
     return $lead;
   }
- 
+
   /**
    * Update a lead
    *
    * put '/leads/{id}'
-   * 
+   *
    * Updates lead information
    * If the specified lead does not exist, this query returns an error
    * <figure class="notice">
@@ -96,29 +96,29 @@ class LeadsService
    *
    * @param integer $id Unique identifier of a Lead
    * @param array $lead This array's attributes describe the object to be updated.
-   * 
+   *
    * @return array The resulting object representing updated resource.
    */
   public function update($id, array $lead)
   {
-    $attributes = array_intersect_key($lead, array_flip(self::$keysToPersist)); 
+    $attributes = array_intersect_key($lead, array_flip(self::$keysToPersist));
     if (isset($attributes['custom_fields']) && empty($attributes['custom_fields'])) unset($attributes['custom_fields']);
  
     list($code, $updatedLead) = $this->httpClient->put("/leads/{$id}", $attributes);
-    return $updatedLead; 
+    return $updatedLead;
   }
 
   /**
    * Delete a lead
    *
    * delete '/leads/{id}'
-   * 
+   *
    * Delete an existing lead
    * If the specified lead does not exist, this query returns an error
    * This operation cannot be undone
    *
    * @param integer $id Unique identifier of a Lead
-   * 
+   *
    * @return boolean Status of the operation.
    */
   public function destroy($id)
