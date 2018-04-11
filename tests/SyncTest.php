@@ -29,7 +29,7 @@ class SyncTest extends \PHPUnit_Framework_TestCase
         'meta' => [
           'type' => 'sync_queue'
         ]
-      ] 
+      ]
     ];
 
     $queueItems = [
@@ -95,7 +95,7 @@ class SyncTest extends \PHPUnit_Framework_TestCase
     $sync->fetch(function($meta, $data) use (&$counter) {
       $this->assertTrue(isset($meta['sync']));
       $this->assertEquals($data['id'], 1);
-      $counter += 1;  
+      $counter += 1;
     });
 
     $this->assertEquals($counter, 2);

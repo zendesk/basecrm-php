@@ -110,7 +110,7 @@ $client->leads->update($lead['id'], $lead);
 ### Error handling
 
 When you instantiate a client or make any request via service objects, exceptions can be raised for multiple
-of reasons e.g. a network error, an authentication error, an invalid param error etc. 
+of reasons e.g. a network error, an authentication error, an invalid param error etc.
 
 Sample below shows how to properly handle exceptions:
 

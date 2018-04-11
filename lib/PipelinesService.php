@@ -6,7 +6,7 @@ namespace BaseCRM;
  * BaseCRM\PipelinesService
  *
  * Class used to make actions related to Pipeline resource.
- * 
+ *
  * @package BaseCRM
  */
 class PipelinesService
@@ -27,16 +27,16 @@ class PipelinesService
    * Retrieve all pipelines
    *
    * get '/pipelines'
-   * 
+   *
    * Returns all pipelines available to the user, according to the parameters provided
    *
    * @param array $options Search options
-   * 
+   *
    * @return array The list of Pipelines for the first page, unless otherwise specified.
    */
   public function all($options = [])
   {
     list($code, $pipelines) = $this->httpClient->get("/pipelines", $options);
-    return $pipelines;  
+    return $pipelines;
   }
 }

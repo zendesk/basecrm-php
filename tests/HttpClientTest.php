@@ -8,7 +8,7 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
   public static function setUpBeforeClass()
   {
     self::$httpClient = new HttpClient(new Configuration([
-      'accessToken' => str_repeat('1', 64) 
+      'accessToken' => str_repeat('1', 64)
     ]));
   }
 
@@ -17,7 +17,7 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
     $payload = [
       'updated_at' => new \DateTime('2016-02-25T01:02:03Z')
     ];
-    
+
     $result = PHPUnitUtil::callMethod(self::$httpClient, 'encodePayload', Array($payload));
     $expectation = ['updated_at' => '2016-02-25T01:02:03+0000'];
 

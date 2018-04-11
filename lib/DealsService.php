@@ -6,7 +6,7 @@ namespace BaseCRM;
  * BaseCRM\DealsService
  *
  * Class used to make actions related to Deal resource.
- * 
+ *
  * @package BaseCRM
  */
 class DealsService
@@ -30,11 +30,11 @@ class DealsService
    * Retrieve all deals
    *
    * get '/deals'
-   * 
+   *
    * Returns all deals available to the user according to the parameters provided
    *
    * @param array $options Search options
-   * 
+   *
    * @return array The list of Deals for the first page, unless otherwise specified.
    */
   public function all($options = [])
@@ -48,11 +48,11 @@ class DealsService
    * Create a deal
    *
    * post '/deals'
-   * 
+   *
    * Create a new deal
    *
    * @param array $deal This array's attributes describe the object to be created.
-   * 
+   *
    * @return array The resulting object representing created resource.
    */
   public function create(array $deal)
@@ -70,12 +70,12 @@ class DealsService
    * Retrieve a single deal
    *
    * get '/deals/{id}'
-   * 
+   *
    * Returns a single deal available to the user, according to the unique deal ID provided
    * If the specified deal does not exist, the request will return an error
    *
    * @param integer $id Unique identifier of a Deal
-   * 
+   *
    * @return array Searched Deal.
    */
   public function get($id)
@@ -84,12 +84,12 @@ class DealsService
     $deal = $this->coerceDealData($deal);
     return $deal;
   }
- 
+
   /**
    * Update a deal
    *
    * put '/deals/{id}'
-   * 
+   *
    * Updates deal information
    * If the specified deal does not exist, the request will return an error
    * <figure class="notice">
@@ -99,7 +99,7 @@ class DealsService
    *
    * @param integer $id Unique identifier of a Deal
    * @param array $deal This array's attributes describe the object to be updated.
-   * 
+   *
    * @return array The resulting object representing updated resource.
    */
   public function update($id, array $deal)
@@ -117,13 +117,13 @@ class DealsService
    * Delete a deal
    *
    * delete '/deals/{id}'
-   * 
+   *
    * Delete an existing deal and remove all of the associated contacts from the deal in a single call
    * If the specified deal does not exist, the request will return an error
    * This operation cannot be undone
    *
    * @param integer $id Unique identifier of a Deal
-   * 
+   *
    * @return boolean Status of the operation.
    */
   public function destroy($id)

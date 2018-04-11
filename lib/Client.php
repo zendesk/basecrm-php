@@ -3,7 +3,7 @@ namespace BaseCRM;
 
 /**
  * BaseCRM\Client
- * 
+ *
  * The client is the entry point to all services and actions.
  *
  * @package   BaseCRM
@@ -13,7 +13,7 @@ class Client
 {
   /**
    * @var \BaseCRM\HttpClient Http client
-   * @ignore 
+   * @ignore
    */
   protected $httpClient;
 
@@ -58,6 +58,13 @@ class Client
   public $dealSources;
 
   /**
+   * @var \BaseCRM\DealUnqualifiedReasonsService Access all DealUnqualifiedReasons related actions.
+   * @see \BaseCRM\DealUnqualifiedReasonsService
+   * @see \BaseCRM\DealUnqualifiedReason
+   */
+  public $dealUnqualifiedReasons;
+
+  /**
    * @var \BaseCRM\LeadsService Access all Leads related actions.
    * @see \BaseCRM\LeadsService
    * @see \BaseCRM\Lead
@@ -70,6 +77,13 @@ class Client
    * @see \BaseCRM\LeadSource
    */
   public $leadSources;
+
+  /**
+   * @var \BaseCRM\LeadUnqualifiedReasonsService Access all LeadUnqualifiedReasons related actions.
+   * @see \BaseCRM\LeadUnqualifiedReasonsService
+   * @see \BaseCRM\LeadUnqualifiedReason
+   */
+  public $leadUnqualifiedReasons;
 
   /**
    * @var \BaseCRM\LineItemsService Access all LineItems related actions.
@@ -149,19 +163,19 @@ class Client
   public $users;
 
   /**
-   * @var \BaseCRM\SyncService Access all Sync API related actions.
-   * @see \BaseCRM\SyncService
-   */
+  * @var \BaseCRM\SyncService Access all Sync API related actions.
+  * @see \BaseCRM\SyncService
+  */
   public $sync;
 
   /*
-   * Instantiate a new BaseCRM API V2 client. 
+   * Instantiate a new BaseCRM API V2 client.
    * Client accepts an array of configuration options.
-   * 
+   *
    * Here's an example of creating a client with an access token:
    *
    *  $client = new \BaseCRM\Client(["accessToken" => "YOUR_PERSONAL_ACCESS_TOKEN"]);
-   * 
+   *
    * @param array $config Client configuration settings
    *    - accessToken: Personal access token
    *    - baseUrl: Base url for the api. Default: "https://api.getbase.com"
@@ -189,8 +203,10 @@ class Client
     $this->contacts = new ContactsService($this->httpClient);
     $this->deals = new DealsService($this->httpClient);
     $this->dealSources = new DealSourcesService($this->httpClient);
+    $this->dealUnqualifiedReasons = new DealUnqualifiedReasonsService($this->httpClient);
     $this->leads = new LeadsService($this->httpClient);
     $this->leadSources = new LeadSourcesService($this->httpClient);
+    $this->leadUnqualifiedReasons = new LeadUnqualifiedReasonsService($this->httpClient);
     $this->lineItems = new LineItemsService($this->httpClient);
     $this->lossReasons = new LossReasonsService($this->httpClient);
     $this->notes = new NotesService($this->httpClient);

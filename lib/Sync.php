@@ -16,7 +16,7 @@ class Sync
    */
   const ACK = true;
 
-  /** 
+  /**
    * @var boolean Constant representing not acknowledged state.
    */
   const NACK = false;
@@ -35,15 +35,15 @@ class Sync
 
   /**
    * Instantiate a new high-level Sync wrapper instance.
-   * 
-   * @param \BaseCRM\Client BaseCRM API V2 client instance. 
+   *
+   * @param \BaseCRM\Client BaseCRM API V2 client instance.
    * @param string $deviceUUID Device's UUID for which to perform synchronization.
    *
    * @throws InvalidArgumentException if deviceUUID is not a string
    */
   public function __construct(Client $client, $deviceUUID)
   {
-    if (!is_string($deviceUUID) || !trim($deviceUUID)) 
+    if (!is_string($deviceUUID) || !trim($deviceUUID))
       throw new InvalidArgumentException('deviceUUID argument must be a non-empty string');
 
     $this->client = $client;
@@ -53,7 +53,7 @@ class Sync
   /**
    * Perform a full syncrhonization flow.
    * See the following example:
-   * 
+   *
    * <code>
    * <?php
    * $client = new \BaseCRM\Client(['accessToken' => '<YOUR_PERSONAL_ACCESS_TOKEN>']);
@@ -66,7 +66,7 @@ class Sync
    * </code>
    *
    * @param Closure $callback Callback that will be called for every item in queue.
-   *  Takes two input arguments: synchronization meta data and associated resource. 
+   *  Takes two input arguments: synchronization meta data and associated resource.
    *  It must return either ACK or NACK|null.
    */
   public function fetch(\Closure $callback)
@@ -88,9 +88,9 @@ class Sync
       // nothing more to synchronize ?
       if (!$queueItems) break;
 
-      // let client know about data and meta 
+      // let client know about data and meta
       $ackKeys = array();
-      
+
       foreach ($queueItems as $item)
       {
         if ($callback($item['meta'], $item['data']))
@@ -98,7 +98,7 @@ class Sync
           $ackKeys[] = $item['meta']['sync']['ack_key'];
         }
       }
-      
+
       // As we fetch new data, we need to send acknowledgement keys - if any
       if ($ackKeys) $this->client->sync->ack($this->deviceUUID, $ackKeys);
     }

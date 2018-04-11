@@ -6,7 +6,7 @@ namespace BaseCRM;
  * BaseCRM\UsersService
  *
  * Class used to make actions related to User resource.
- * 
+ *
  * @package BaseCRM
  */
 class UsersService
@@ -27,29 +27,29 @@ class UsersService
    * Retrieve all users
    *
    * get '/users'
-   * 
+   *
    * Returns all users, according to the parameters provided
    *
    * @param array $options Search options
-   * 
+   *
    * @return array The list of Users for the first page, unless otherwise specified.
    */
   public function all($options = [])
   {
     list($code, $users) = $this->httpClient->get("/users", $options);
-    return $users;  
+    return $users;
   }
 
   /**
    * Retrieve a single user
    *
    * get '/users/{id}'
-   * 
+   *
    * Returns a single user according to the unique user ID provided
    * If the specified user does not exist, this query returns an error
    *
    * @param integer $id Unique identifier of a User
-   * 
+   *
    * @return array Searched User.
    */
   public function get($id)
@@ -62,10 +62,10 @@ class UsersService
    * Retrieve an authenticating user
    *
    * get '/users/self'
-   * 
+   *
    * Returns a single authenticating user, according to the authentication credentials provided
    *
-   * 
+   *
    * @return array Resource object.
    */
   public function self()
