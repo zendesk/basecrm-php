@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### v1.3.3 (2018-06-05)
+
+**Features and Improvements**
+  * Added possibility to set deal's 'customized_win_likelihood', 'last_stage_change_at' attributes
+
 ### v1.3.2 (2018-04-11)
 
 **Features and Improvements**
