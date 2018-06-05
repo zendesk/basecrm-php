@@ -63,7 +63,7 @@ class DealsService
     $attributes["value"] = Coercion::toStringValue($attributes['value']);
     list($code, $createdDeal) = $this->httpClient->post("/deals", $attributes);
     $createdDeal = $this->coerceDealData($createdDeal);
-    return $createdDeal; 
+    return $createdDeal;
   }
 
   /**
@@ -104,13 +104,13 @@ class DealsService
    */
   public function update($id, array $deal)
   {
-    $attributes = array_intersect_key($deal, array_flip(self::$keysToPersist)); 
+    $attributes = array_intersect_key($deal, array_flip(self::$keysToPersist));
     if (isset($attributes['custom_fields']) && empty($attributes['custom_fields'])) unset($attributes['custom_fields']);
     if (isset($attributes["value"])) $attributes["value"] = Coercion::toStringValue($attributes['value']);
 
     list($code, $updatedDeal) = $this->httpClient->put("/deals/{$id}", $attributes);
     $updatedDeal = $this->coerceDealData($updatedDeal);
-    return $updatedDeal; 
+    return $updatedDeal;
   }
 
   /**

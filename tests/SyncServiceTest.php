@@ -49,7 +49,7 @@ class SyncServiceTest extends \PHPUnit_Framework_TestCase
         'meta' => [
           'type' => 'sync_queue'
         ]
-      ] 
+      ]
     ];
 
     $httpResponse = [201, $payload];
@@ -99,12 +99,12 @@ class SyncServiceTest extends \PHPUnit_Framework_TestCase
 
     $http->expects($this->once())
           ->method('get')
-          ->with("/sync/{$this->sessionId}/queues/main", 
-                  null, 
+          ->with("/sync/{$this->sessionId}/queues/main",
+                  null,
                   [
                     'headers' => [
                       'X-Basecrm-Device-UUID' => $this->deviceUUID
-                    ], 
+                    ],
                     'raw' => true])
           ->will($this->returnValue($httpResponse));
 
@@ -130,7 +130,7 @@ class SyncServiceTest extends \PHPUnit_Framework_TestCase
       ],
       'meta' => [
         'type' => 'collection'
-      ] 
+      ]
     ];
 
     $httpResponse = [200, $payload];
@@ -141,12 +141,12 @@ class SyncServiceTest extends \PHPUnit_Framework_TestCase
 
     $http->expects($this->once())
           ->method('get')
-          ->with("/sync/{$this->sessionId}/queues/main", 
-                  null, 
+          ->with("/sync/{$this->sessionId}/queues/main",
+                  null,
                   [
                     'headers' => [
                       'X-Basecrm-Device-UUID' => $this->deviceUUID
-                    ], 
+                    ],
                     'raw' => true])
           ->will($this->returnValue($httpResponse));
 
