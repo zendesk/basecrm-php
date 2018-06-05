@@ -451,7 +451,7 @@ $ BASECRM_ACCESS_TOKEN=<your-token-here> ./vendor/bin/phpunit
 And to run a single suite:
 
 ```bash
-$ BASECRM_ACCESS_TOKEN=<your-token-here> ./vendor/bin/phpunit --filter testUpdate tests/LeadsServiceTest.php 
+$ BASECRM_ACCESS_TOKEN=<your-token-here> ./vendor/bin/phpunit --filter testUpdate tests/LeadsServiceTest.php
 ```
 
 ## License
