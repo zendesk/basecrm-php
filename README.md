@@ -421,6 +421,17 @@ Actions:
 * Update a task - `client->tasks->update`
 * Delete a task - `client->tasks->destroy`
 
+### TextMessage
+
+```php
+$client = new \BaseCRM\Client(['accessToken' => '<YOUR_PERSONAL_ACCESS_TOKEN>');
+$client->textMessages // => \BaseCRM\TextMessagesService
+```
+
+Actions:
+* Retrieve text messages - `client->textMessages->all`
+* Retrieve a single text message - `client->textMessages->get`
+
 ### User
 
 ```php
@@ -432,6 +443,26 @@ Actions:
 * Retrieve all users - `client->users->all`
 * Retrieve a single user - `client->users->get`
 * Retrieve an authenticating user - `client->users->self`
+
+### Visit
+
+```php
+$client = new \BaseCRM\Client(['accessToken' => '<YOUR_PERSONAL_ACCESS_TOKEN>');
+$client->visits // => \BaseCRM\VisitsService
+```
+
+Actions:
+* Retrieve visits - `client->visits->all`
+
+### VisitOutcome
+
+```php
+$client = new \BaseCRM\Client(['accessToken' => '<YOUR_PERSONAL_ACCESS_TOKEN>');
+$client->visitOutcomes // => \BaseCRM\VisitOutcomesService
+```
+
+Actions:
+* Retrieve visit outcomes - `client->visitOutcomes->all`
 
 
 ## Tests

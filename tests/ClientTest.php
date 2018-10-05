@@ -102,9 +102,24 @@ class ClientTest extends TestCase
     $this->assertTrue(property_exists(self::$client, 'tasks'));
   }
 
+  public function testTextMessagePropertyExists()
+  {
+    $this->assertTrue(property_exists(self::$client, 'textMessages'));
+  }
+
   public function testUserPropertyExists()
   {
     $this->assertTrue(property_exists(self::$client, 'users'));
+  }
+
+  public function testVisitPropertyExists()
+  {
+    $this->assertTrue(property_exists(self::$client, 'visits'));
+  }
+
+  public function testVisitOutcomePropertyExists()
+  {
+    $this->assertTrue(property_exists(self::$client, 'visitOutcomes'));
   }
 
   public function testSyncPropertyExists()

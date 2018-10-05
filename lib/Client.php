@@ -156,11 +156,32 @@ class Client
   public $tasks;
 
   /**
+   * @var \BaseCRM\TextMessagesService Access all TextMessages related actions.
+   * @see \BaseCRM\TextMessagesService
+   * @see \BaseCRM\TextMessage
+   */
+  public $textMessages;
+
+  /**
    * @var \BaseCRM\UsersService Access all Users related actions.
    * @see \BaseCRM\UsersService
    * @see \BaseCRM\User
    */
   public $users;
+
+  /**
+   * @var \BaseCRM\VisitsService Access all Visits related actions.
+   * @see \BaseCRM\VisitsService
+   * @see \BaseCRM\Visit
+   */
+  public $visits;
+
+  /**
+   * @var \BaseCRM\VisitOutcomesService Access all VisitOutcomes related actions.
+   * @see \BaseCRM\VisitOutcomesService
+   * @see \BaseCRM\VisitOutcome
+   */
+  public $visitOutcomes;
 
   /**
   * @var \BaseCRM\SyncService Access all Sync API related actions.
@@ -217,7 +238,10 @@ class Client
     $this->stages = new StagesService($this->httpClient);
     $this->tags = new TagsService($this->httpClient);
     $this->tasks = new TasksService($this->httpClient);
+    $this->textMessages = new TextMessagesService($this->httpClient);
     $this->users = new UsersService($this->httpClient);
+    $this->visits = new VisitsService($this->httpClient);
+    $this->visitOutcomes = new VisitOutcomesService($this->httpClient);
 
     $this->sync = new SyncService($this->httpClient);
   }
