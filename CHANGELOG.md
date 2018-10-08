@@ -1,5 +1,13 @@
 ## CHANGELOG
 
+### v1.4.0 (2018-10-08)
+
+**Bug Fixes**
+  * Fixed HTTP Client, now proper uppercased HTTP method names are generated
+
+**Features and Improvements**
+  * Support for resources: Text Messages, Visits, Visit Outcomes
+
 ### v1.3.3 (2018-06-05)
 
 **Features and Improvements**
