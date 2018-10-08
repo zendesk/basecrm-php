@@ -98,7 +98,7 @@ class HttpClient
    */
   public function request($method, $url, array $params = null, array $body = null, array $options = array())
   {
-    $method = strtolower($method);
+    $method = strtoupper($method);
 
     $defaultHeaders = [
       'User-Agent' => $this->config->userAgent,
@@ -110,7 +110,7 @@ class HttpClient
 
     $headers = array_merge($defaultHeaders, $userHeaders);
 
-    if ($body && in_array($method, ['post', 'put', 'patch']))
+    if ($body && in_array($method, ['POST', 'PUT', 'PATCH']))
     {
       $headers['Content-Type'] = 'application/json';
     }
@@ -136,7 +136,7 @@ class HttpClient
     curl_setopt($curl, CURLOPT_HTTPHEADER, $rawHeaders);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
-    if ($body && in_array($method, ['post', 'put', 'patch']))
+    if ($body && in_array($method, ['POST', 'PUT', 'PATCH']))
     {
       $envelope = $raw ? $body : $this->wrapEnvelope($body);
       $payload = json_encode($this->encodePayload($envelope));
