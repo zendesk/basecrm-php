@@ -95,7 +95,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
   {
     $contact = [
       'description' => "I know him via Tom",
-      'email' => "mark@designservices.com",
+      'email' => "mark" . rand() . "@designservices.com",
       'facebook' => "mjohnson",
       'fax' => "+44-208-1234567",
       'first_name' => 'Mark' . rand(),
@@ -178,7 +178,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
   {
     $lead = [
       'description' => "I know him via Tom",
-      'email' => "mark@designservices.com",
+      'email' => "mark" . rand() . "@designservices.com",
       'facebook' => "mjohnson",
       'fax' => "+44-208-1234567",
       'first_name' => 'Mark' . rand(),
