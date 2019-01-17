@@ -30,13 +30,14 @@ class VisitOutcomesService
    *
    * Returns Visit Outcomes, according to the parameters provided
    *
-   * @param array $options Search options
+   * @param array $params Search options
+   * @param array $options Additional request's options.
    *
    * @return array The list of VisitOutcomes for the first page, unless otherwise specified.
    */
-  public function all($options = [])
+  public function all($params = [], array $options = array())
   {
-    list($code, $visit_outcomes) = $this->httpClient->get("/visit_outcomes", $options);
+    list($code, $visit_outcomes) = $this->httpClient->get("/visit_outcomes", $params, $options);
     return $visit_outcomes;
   }
 }

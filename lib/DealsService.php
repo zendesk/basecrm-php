@@ -33,13 +33,17 @@ class DealsService
    *
    * Returns all deals available to the user according to the parameters provided
    *
-   * @param array $options Search options
+   * @param array $params Search options
+   * @param array $options Additional request's options.
    *
    * @return array The list of Deals for the first page, unless otherwise specified.
    */
-  public function all($options = [])
+  public function all($params = [], array $options = array())
   {
-    list($code, $deals) = $this->httpClient->get("/deals", $options);
+    list($code, $deals) = $this->httpClient->get("/deals", $params, $options);
+    if (isset($options['raw']) && $options['raw']) {
+      return $deals;
+    }
     $dealsData = array_map(array($this, 'coerceNestedDealData'), $deals);
     return $dealsData;
   }
@@ -52,16 +56,20 @@ class DealsService
    * Create a new deal
    *
    * @param array $deal This array's attributes describe the object to be created.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing created resource.
    */
-  public function create(array $deal)
+  public function create(array $deal, array $options = array())
   {
     $attributes = array_intersect_key($deal, array_flip(self::$keysToPersist));
     if (isset($attributes['custom_fields']) && empty($attributes['custom_fields'])) unset($attributes['custom_fields']);
- 
+
     $attributes["value"] = Coercion::toStringValue($attributes['value']);
-    list($code, $createdDeal) = $this->httpClient->post("/deals", $attributes);
+    list($code, $createdDeal) = $this->httpClient->post("/deals", $attributes, $options);
+    if (isset($options['raw']) && $options['raw']) {
+      return $createdDeal;
+    }
     $createdDeal = $this->coerceDealData($createdDeal);
     return $createdDeal;
   }
@@ -75,12 +83,16 @@ class DealsService
    * If the specified deal does not exist, the request will return an error
    *
    * @param integer $id Unique identifier of a Deal
+   * @param array $options Additional request's options.
    *
    * @return array Searched Deal.
    */
-  public function get($id)
+  public function get($id, array $options = array())
   {
-    list($code, $deal) = $this->httpClient->get("/deals/{$id}");
+    list($code, $deal) = $this->httpClient->get("/deals/{$id}", null, $options);
+    if (isset($options['raw']) && $options['raw']) {
+      return $deal;
+    }
     $deal = $this->coerceDealData($deal);
     return $deal;
   }
@@ -99,16 +111,20 @@ class DealsService
    *
    * @param integer $id Unique identifier of a Deal
    * @param array $deal This array's attributes describe the object to be updated.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing updated resource.
    */
-  public function update($id, array $deal)
+  public function update($id, array $deal, array $options = array())
   {
     $attributes = array_intersect_key($deal, array_flip(self::$keysToPersist));
     if (isset($attributes['custom_fields']) && empty($attributes['custom_fields'])) unset($attributes['custom_fields']);
     if (isset($attributes["value"])) $attributes["value"] = Coercion::toStringValue($attributes['value']);
 
-    list($code, $updatedDeal) = $this->httpClient->put("/deals/{$id}", $attributes);
+    list($code, $updatedDeal) = $this->httpClient->put("/deals/{$id}", $attributes, $options);
+    if (isset($options['raw']) && $options['raw']) {
+      return $updatedDeal;
+    }
     $updatedDeal = $this->coerceDealData($updatedDeal);
     return $updatedDeal;
   }
@@ -123,12 +139,13 @@ class DealsService
    * This operation cannot be undone
    *
    * @param integer $id Unique identifier of a Deal
+   * @param array $options Additional request's options.
    *
    * @return boolean Status of the operation.
    */
-  public function destroy($id)
+  public function destroy($id, array $options = array())
   {
-    list($code, $payload) = $this->httpClient->delete("/deals/{$id}");
+    list($code, $payload) = $this->httpClient->delete("/deals/{$id}", null, $options);
     return $code == 204;
   }
 

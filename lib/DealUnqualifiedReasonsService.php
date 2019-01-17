@@ -33,13 +33,14 @@ class DealUnqualifiedReasonsService
    *
    * Returns all deal unqualified reasons available to the user according to the parameters provided
    *
-   * @param array $options Search options
+   * @param array $params Search options
+   * @param array $options Additional request's options.
    *
    * @return array The list of DealUnqualifiedReasons for the first page, unless otherwise specified.
    */
-  public function all($options = [])
+  public function all($params = [], array $options = array())
   {
-    list($code, $deal_unqualified_reasons) = $this->httpClient->get("/deal_unqualified_reasons", $options);
+    list($code, $deal_unqualified_reasons) = $this->httpClient->get("/deal_unqualified_reasons", $params, $options);
     return $deal_unqualified_reasons;
   }
 
@@ -54,14 +55,15 @@ class DealUnqualifiedReasonsService
    * </figure>
    *
    * @param array $dealUnqualifiedReason This array's attributes describe the object to be created.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing created resource.
    */
-  public function create(array $dealUnqualifiedReason)
+  public function create(array $dealUnqualifiedReason, array $options = array())
   {
     $attributes = array_intersect_key($dealUnqualifiedReason, array_flip(self::$keysToPersist));
 
-    list($code, $createdDealUnqualifiedReason) = $this->httpClient->post("/deal_unqualified_reasons", $attributes);
+    list($code, $createdDealUnqualifiedReason) = $this->httpClient->post("/deal_unqualified_reasons", $attributes, $options);
     return $createdDealUnqualifiedReason;
   }
 
@@ -74,12 +76,13 @@ class DealUnqualifiedReasonsService
    * If a loss reason with the supplied unique identifier does not exist, it returns an error
    *
    * @param integer $id Unique identifier of a DealUnqualifiedReason
+   * @param array $options Additional request's options.
    *
    * @return array Searched DealUnqualifiedReason.
    */
-  public function get($id)
+  public function get($id, array $options = array())
   {
-    list($code, $deal_unqualified_reason) = $this->httpClient->get("/deal_unqualified_reasons/{$id}");
+    list($code, $deal_unqualified_reason) = $this->httpClient->get("/deal_unqualified_reasons/{$id}", null, $options);
     return $deal_unqualified_reason;
   }
 
@@ -96,14 +99,15 @@ class DealUnqualifiedReasonsService
    *
    * @param integer $id Unique identifier of a DealUnqualifiedReason
    * @param array $dealUnqualifiedReason This array's attributes describe the object to be updated.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing updated resource.
    */
-  public function update($id, array $dealUnqualifiedReason)
+  public function update($id, array $dealUnqualifiedReason, array $options = array())
   {
     $attributes = array_intersect_key($dealUnqualifiedReason, array_flip(self::$keysToPersist));
 
-    list($code, $updatedDealUnqualifiedReason) = $this->httpClient->put("/deal_unqualified_reasons/{$id}", $attributes);
+    list($code, $updatedDealUnqualifiedReason) = $this->httpClient->put("/deal_unqualified_reasons/{$id}", $attributes, $options);
     return $updatedDealUnqualifiedReason;
   }
 
@@ -117,12 +121,13 @@ class DealUnqualifiedReasonsService
    * This operation cannot be undone
    *
    * @param integer $id Unique identifier of a DealUnqualifiedReason
+   * @param array $options Additional request's options.
    *
    * @return boolean Status of the operation.
    */
-  public function destroy($id)
+  public function destroy($id, array $options = array())
   {
-    list($code, $payload) = $this->httpClient->delete("/deal_unqualified_reasons/{$id}");
+    list($code, $payload) = $this->httpClient->delete("/deal_unqualified_reasons/{$id}", null, $options);
     return $code == 204;
   }
 }

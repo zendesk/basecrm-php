@@ -30,13 +30,14 @@ class PipelinesService
    *
    * Returns all pipelines available to the user, according to the parameters provided
    *
-   * @param array $options Search options
+   * @param array $params Search options
+   * @param array $options Additional request's options.
    *
    * @return array The list of Pipelines for the first page, unless otherwise specified.
    */
-  public function all($options = [])
+  public function all($params = [], array $options = array())
   {
-    list($code, $pipelines) = $this->httpClient->get("/pipelines", $options);
+    list($code, $pipelines) = $this->httpClient->get("/pipelines", $params, $options);
     return $pipelines;
   }
 }

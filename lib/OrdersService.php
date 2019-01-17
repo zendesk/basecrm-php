@@ -33,13 +33,14 @@ class OrdersService
    *
    * Returns all orders available to the user according to the parameters provided
    *
-   * @param array $options Search options
+   * @param array $params Search options
+   * @param array $options Additional request's options.
    *
    * @return array The list of Orders for the first page, unless otherwise specified.
    */
-  public function all($options = [])
+  public function all($params = [], array $options = array())
   {
-    list($code, $orders) = $this->httpClient->get("/orders", $options);
+    list($code, $orders) = $this->httpClient->get("/orders", $params, $options);
     return $orders;
   }
 
@@ -53,14 +54,15 @@ class OrdersService
    * Each deal can have at most one order and error is returned when attempting to create more
    *
    * @param array $order This array's attributes describe the object to be created.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing created resource.
    */
-  public function create(array $order)
+  public function create(array $order, array $options = array())
   {
     $attributes = array_intersect_key($order, array_flip(self::$keysToPersist));
 
-    list($code, $createdOrder) = $this->httpClient->post("/orders", $attributes);
+    list($code, $createdOrder) = $this->httpClient->post("/orders", $attributes, $options);
     return $createdOrder;
   }
 
@@ -73,12 +75,13 @@ class OrdersService
    * If the specified order does not exist, the request will return an error
    *
    * @param integer $id Unique identifier of a Order
+   * @param array $options Additional request's options.
    *
    * @return array Searched Order.
    */
-  public function get($id)
+  public function get($id, array $options = array())
   {
-    list($code, $order) = $this->httpClient->get("/orders/{$id}");
+    list($code, $order) = $this->httpClient->get("/orders/{$id}", null, $options);
     return $order;
   }
 
@@ -92,14 +95,15 @@ class OrdersService
    *
    * @param integer $id Unique identifier of a Order
    * @param array $order This array's attributes describe the object to be updated.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing updated resource.
    */
-  public function update($id, array $order)
+  public function update($id, array $order, array $options = array())
   {
     $attributes = array_intersect_key($order, array_flip(self::$keysToPersist));
 
-    list($code, $updatedOrder) = $this->httpClient->put("/orders/{$id}", $attributes);
+    list($code, $updatedOrder) = $this->httpClient->put("/orders/{$id}", $attributes, $options);
     return $updatedOrder;
   }
 
@@ -113,12 +117,13 @@ class OrdersService
    * This operation cannot be undone
    *
    * @param integer $id Unique identifier of a Order
+   * @param array $options Additional request's options.
    *
    * @return boolean Status of the operation.
    */
-  public function destroy($id)
+  public function destroy($id, array $options = array())
   {
-    list($code, $payload) = $this->httpClient->delete("/orders/{$id}");
+    list($code, $payload) = $this->httpClient->delete("/orders/{$id}", null, $options);
     return $code == 204;
   }
 }

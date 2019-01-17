@@ -30,13 +30,14 @@ class UsersService
    *
    * Returns all users, according to the parameters provided
    *
-   * @param array $options Search options
+   * @param array $params Search options
+   * @param array $options Additional request's options.
    *
    * @return array The list of Users for the first page, unless otherwise specified.
    */
-  public function all($options = [])
+  public function all($params = [], array $options = array())
   {
-    list($code, $users) = $this->httpClient->get("/users", $options);
+    list($code, $users) = $this->httpClient->get("/users", $params, $options);
     return $users;
   }
 
@@ -49,12 +50,13 @@ class UsersService
    * If the specified user does not exist, this query returns an error
    *
    * @param integer $id Unique identifier of a User
+   * @param array $options Additional request's options.
    *
    * @return array Searched User.
    */
-  public function get($id)
+  public function get($id, array $options = array())
   {
-    list($code, $user) = $this->httpClient->get("/users/{$id}");
+    list($code, $user) = $this->httpClient->get("/users/{$id}", null, $options);
     return $user;
   }
 
@@ -65,12 +67,13 @@ class UsersService
    *
    * Returns a single authenticating user, according to the authentication credentials provided
    *
+   * @param array $options Additional request's options.
    *
    * @return array Resource object.
    */
-  public function self()
+  public function self(array $options = array())
   {
-    list($code, $resource) = $this->httpClient->get("/users/self");
+    list($code, $resource) = $this->httpClient->get("/users/self", null, $options);
     return $resource;
   }
 }

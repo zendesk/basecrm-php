@@ -30,13 +30,14 @@ class TextMessagesService
    *
    * Returns Text Messages, according to the parameters provided
    *
-   * @param array $options Search options
+   * @param array $params Search options
+   * @param array $options Additional request's options.
    *
    * @return array The list of TextMessages for the first page, unless otherwise specified.
    */
-  public function all($options = [])
+  public function all($params = [], array $options = array())
   {
-    list($code, $text_messages) = $this->httpClient->get("/text_messages", $options);
+    list($code, $text_messages) = $this->httpClient->get("/text_messages", $params, $options);
     return $text_messages;
   }
 
@@ -49,12 +50,13 @@ class TextMessagesService
    * If the specified user does not exist, this query returns an error
    *
    * @param integer $id Unique identifier of a TextMessage
+   * @param array $options Additional request's options.
    *
    * @return array Searched TextMessage.
    */
-  public function get($id)
+  public function get($id, array $options = array())
   {
-    list($code, $text_message) = $this->httpClient->get("/text_messages/{$id}");
+    list($code, $text_message) = $this->httpClient->get("/text_messages/{$id}", null, $options);
     return $text_message;
   }
 }

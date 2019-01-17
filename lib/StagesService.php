@@ -30,13 +30,14 @@ class StagesService
    *
    * Returns all stages available to the user, according to the parameters provided
    *
-   * @param array $options Search options
+   * @param array $params Search options
+   * @param array $options Additional request's options.
    *
    * @return array The list of Stages for the first page, unless otherwise specified.
    */
-  public function all($options = [])
+  public function all($params = [], array $options = array())
   {
-    list($code, $stages) = $this->httpClient->get("/stages", $options);
+    list($code, $stages) = $this->httpClient->get("/stages", $params, $options);
     return $stages;
   }
 }

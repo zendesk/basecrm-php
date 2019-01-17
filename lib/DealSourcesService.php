@@ -33,13 +33,14 @@ class DealSourcesService
    *
    * Returns all deal sources available to the user according to the parameters provided
    *
-   * @param array $options Search options
+   * @param array $params Search options
+   * @param array $options Additional request's options.
    *
    * @return array The list of DealSources for the first page, unless otherwise specified.
    */
-  public function all($options = [])
+  public function all($params = [], array $options = array())
   {
-    list($code, $deal_sources) = $this->httpClient->get("/deal_sources", $options);
+    list($code, $deal_sources) = $this->httpClient->get("/deal_sources", $params, $options);
     return $deal_sources;
   }
 
@@ -54,14 +55,15 @@ class DealSourcesService
    * </figure>
    *
    * @param array $dealSource This array's attributes describe the object to be created.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing created resource.
    */
-  public function create(array $dealSource)
+  public function create(array $dealSource, array $options = array())
   {
     $attributes = array_intersect_key($dealSource, array_flip(self::$keysToPersist));
 
-    list($code, $createdDealSource) = $this->httpClient->post("/deal_sources", $attributes);
+    list($code, $createdDealSource) = $this->httpClient->post("/deal_sources", $attributes, $options);
     return $createdDealSource;
   }
 
@@ -74,12 +76,13 @@ class DealSourcesService
    * If a source with the supplied unique identifier does not exist it returns an error
    *
    * @param integer $id Unique identifier of a DealSource
+   * @param array $options Additional request's options.
    *
    * @return array Searched DealSource.
    */
-  public function get($id)
+  public function get($id, array $options = array())
   {
-    list($code, $deal_source) = $this->httpClient->get("/deal_sources/{$id}");
+    list($code, $deal_source) = $this->httpClient->get("/deal_sources/{$id}", null, $options);
     return $deal_source;
   }
 
@@ -96,14 +99,15 @@ class DealSourcesService
    *
    * @param integer $id Unique identifier of a DealSource
    * @param array $dealSource This array's attributes describe the object to be updated.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing updated resource.
    */
-  public function update($id, array $dealSource)
+  public function update($id, array $dealSource, array $options = array())
   {
     $attributes = array_intersect_key($dealSource, array_flip(self::$keysToPersist));
 
-    list($code, $updatedDealSource) = $this->httpClient->put("/deal_sources/{$id}", $attributes);
+    list($code, $updatedDealSource) = $this->httpClient->put("/deal_sources/{$id}", $attributes, $options);
     return $updatedDealSource;
   }
 
@@ -117,12 +121,13 @@ class DealSourcesService
    * This operation cannot be undone
    *
    * @param integer $id Unique identifier of a DealSource
+   * @param array $options Additional request's options.
    *
    * @return boolean Status of the operation.
    */
-  public function destroy($id)
+  public function destroy($id, array $options = array())
   {
-    list($code, $payload) = $this->httpClient->delete("/deal_sources/{$id}");
+    list($code, $payload) = $this->httpClient->delete("/deal_sources/{$id}", null, $options);
     return $code == 204;
   }
 }
