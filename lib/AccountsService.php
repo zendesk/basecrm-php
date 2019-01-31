@@ -31,11 +31,13 @@ class AccountsService
    * Returns detailed information about your account
    *
    *
+   * @param array $options Additional request's options.
+   *
    * @return array Resource object.
    */
-  public function self()
+  public function self(array $options = array())
   {
-    list($code, $resource) = $this->httpClient->get("/accounts/self");
+    list($code, $resource) = $this->httpClient->get("/accounts/self", null, $options);
     return $resource;
   }
 }

@@ -33,13 +33,14 @@ class NotesService
    *
    * Returns all notes available to the user, according to the parameters provided
    *
-   * @param array $options Search options
+   * @param array $params Search options
+   * @param array $options Additional request's options.
    *
    * @return array The list of Notes for the first page, unless otherwise specified.
    */
-  public function all($options = [])
+  public function all($params = [], array $options = array())
   {
-    list($code, $notes) = $this->httpClient->get("/notes", $options);
+    list($code, $notes) = $this->httpClient->get("/notes", $params, $options);
     return $notes;
   }
 
@@ -54,14 +55,15 @@ class NotesService
    * * [Deals](/docs/rest/reference/deals)
    *
    * @param array $note This array's attributes describe the object to be created.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing created resource.
    */
-  public function create(array $note)
+  public function create(array $note, array $options = array())
   {
     $attributes = array_intersect_key($note, array_flip(self::$keysToPersist));
 
-    list($code, $createdNote) = $this->httpClient->post("/notes", $attributes);
+    list($code, $createdNote) = $this->httpClient->post("/notes", $attributes, $options);
     return $createdNote;
   }
 
@@ -74,12 +76,13 @@ class NotesService
    * If the note ID does not exist, this request will return an error
    *
    * @param integer $id Unique identifier of a Note
+   * @param array $options Additional request's options.
    *
    * @return array Searched Note.
    */
-  public function get($id)
+  public function get($id, array $options = array())
   {
-    list($code, $note) = $this->httpClient->get("/notes/{$id}");
+    list($code, $note) = $this->httpClient->get("/notes/{$id}", null, $options);
     return $note;
   }
 
@@ -93,14 +96,15 @@ class NotesService
    *
    * @param integer $id Unique identifier of a Note
    * @param array $note This array's attributes describe the object to be updated.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing updated resource.
    */
-  public function update($id, array $note)
+  public function update($id, array $note, array $options = array())
   {
     $attributes = array_intersect_key($note, array_flip(self::$keysToPersist));
 
-    list($code, $updatedNote) = $this->httpClient->put("/notes/{$id}", $attributes);
+    list($code, $updatedNote) = $this->httpClient->put("/notes/{$id}", $attributes, $options);
     return $updatedNote;
   }
 
@@ -114,12 +118,13 @@ class NotesService
    * This operation cannot be undone
    *
    * @param integer $id Unique identifier of a Note
+   * @param array $options Additional request's options.
    *
    * @return boolean Status of the operation.
    */
-  public function destroy($id)
+  public function destroy($id, array $options = array())
   {
-    list($code, $payload) = $this->httpClient->delete("/notes/{$id}");
+    list($code, $payload) = $this->httpClient->delete("/notes/{$id}", null, $options);
     return $code == 204;
   }
 }

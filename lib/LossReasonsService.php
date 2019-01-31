@@ -33,13 +33,14 @@ class LossReasonsService
    *
    * Returns all deal loss reasons available to the user according to the parameters provided
    *
-   * @param array $options Search options
+   * @param array $params Search options
+   * @param array $options Additional request's options.
    *
    * @return array The list of LossReasons for the first page, unless otherwise specified.
    */
-  public function all($options = [])
+  public function all($params = [], array $options = array())
   {
-    list($code, $loss_reasons) = $this->httpClient->get("/loss_reasons", $options);
+    list($code, $loss_reasons) = $this->httpClient->get("/loss_reasons", $params, $options);
     return $loss_reasons;
   }
 
@@ -54,14 +55,15 @@ class LossReasonsService
    * </figure>
    *
    * @param array $lossReason This array's attributes describe the object to be created.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing created resource.
    */
-  public function create(array $lossReason)
+  public function create(array $lossReason, array $options = array())
   {
     $attributes = array_intersect_key($lossReason, array_flip(self::$keysToPersist));
 
-    list($code, $createdLossReason) = $this->httpClient->post("/loss_reasons", $attributes);
+    list($code, $createdLossReason) = $this->httpClient->post("/loss_reasons", $attributes, $options);
     return $createdLossReason;
   }
 
@@ -74,12 +76,13 @@ class LossReasonsService
    * If a loss reason with the supplied unique identifier does not exist, it returns an error
    *
    * @param integer $id Unique identifier of a LossReason
+   * @param array $options Additional request's options.
    *
    * @return array Searched LossReason.
    */
-  public function get($id)
+  public function get($id, array $options = array())
   {
-    list($code, $loss_reason) = $this->httpClient->get("/loss_reasons/{$id}");
+    list($code, $loss_reason) = $this->httpClient->get("/loss_reasons/{$id}", null, $options);
     return $loss_reason;
   }
 
@@ -96,14 +99,15 @@ class LossReasonsService
    *
    * @param integer $id Unique identifier of a LossReason
    * @param array $lossReason This array's attributes describe the object to be updated.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing updated resource.
    */
-  public function update($id, array $lossReason)
+  public function update($id, array $lossReason, array $options = array())
   {
     $attributes = array_intersect_key($lossReason, array_flip(self::$keysToPersist));
 
-    list($code, $updatedLossReason) = $this->httpClient->put("/loss_reasons/{$id}", $attributes);
+    list($code, $updatedLossReason) = $this->httpClient->put("/loss_reasons/{$id}", $attributes, $options);
     return $updatedLossReason;
   }
 
@@ -117,12 +121,13 @@ class LossReasonsService
    * This operation cannot be undone
    *
    * @param integer $id Unique identifier of a LossReason
+   * @param array $options Additional request's options.
    *
    * @return boolean Status of the operation.
    */
-  public function destroy($id)
+  public function destroy($id, array $options = array())
   {
-    list($code, $payload) = $this->httpClient->delete("/loss_reasons/{$id}");
+    list($code, $payload) = $this->httpClient->delete("/loss_reasons/{$id}", null, $options);
     return $code == 204;
   }
 }

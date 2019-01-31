@@ -33,13 +33,14 @@ class ProductsService
    *
    * Returns all products available to the user according to the parameters provided
    *
-   * @param array $options Search options
+   * @param array $params Search options
+   * @param array $options Additional request's options.
    *
    * @return array The list of Products for the first page, unless otherwise specified.
    */
-  public function all($options = [])
+  public function all($params = [], array $options = array())
   {
-    list($code, $products) = $this->httpClient->get("/products", $options);
+    list($code, $products) = $this->httpClient->get("/products", $params, $options);
     return $products;
   }
 
@@ -51,14 +52,15 @@ class ProductsService
    * Create a new product
    *
    * @param array $product This array's attributes describe the object to be created.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing created resource.
    */
-  public function create(array $product)
+  public function create(array $product, array $options = array())
   {
     $attributes = array_intersect_key($product, array_flip(self::$keysToPersist));
 
-    list($code, $createdProduct) = $this->httpClient->post("/products", $attributes);
+    list($code, $createdProduct) = $this->httpClient->post("/products", $attributes, $options);
     return $createdProduct;
   }
 
@@ -71,12 +73,13 @@ class ProductsService
    * If the specified product does not exist, the request will return an error
    *
    * @param integer $id Unique identifier of a Product
+   * @param array $options Additional request's options.
    *
    * @return array Searched Product.
    */
-  public function get($id)
+  public function get($id, array $options = array())
   {
-    list($code, $product) = $this->httpClient->get("/products/{$id}");
+    list($code, $product) = $this->httpClient->get("/products/{$id}", null, $options);
     return $product;
   }
 
@@ -93,14 +96,15 @@ class ProductsService
    *
    * @param integer $id Unique identifier of a Product
    * @param array $product This array's attributes describe the object to be updated.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing updated resource.
    */
-  public function update($id, array $product)
+  public function update($id, array $product, array $options = array())
   {
     $attributes = array_intersect_key($product, array_flip(self::$keysToPersist));
 
-    list($code, $updatedProduct) = $this->httpClient->put("/products/{$id}", $attributes);
+    list($code, $updatedProduct) = $this->httpClient->put("/products/{$id}", $attributes, $options);
     return $updatedProduct;
   }
 
@@ -116,12 +120,13 @@ class ProductsService
    * Products can be removed only by an account administrator
    *
    * @param integer $id Unique identifier of a Product
+   * @param array $options Additional request's options.
    *
    * @return boolean Status of the operation.
    */
-  public function destroy($id)
+  public function destroy($id, array $options = array())
   {
-    list($code, $payload) = $this->httpClient->delete("/products/{$id}");
+    list($code, $payload) = $this->httpClient->delete("/products/{$id}", null, $options);
     return $code == 204;
   }
 }

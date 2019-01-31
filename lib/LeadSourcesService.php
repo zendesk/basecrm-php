@@ -33,13 +33,14 @@ class LeadSourcesService
    *
    * Returns all lead sources available to the user according to the parameters provided
    *
-   * @param array $options Search options
+   * @param array $params Search options
+   * @param array $options Additional request's options.
    *
    * @return array The list of LeadSources for the first page, unless otherwise specified.
    */
-  public function all($options = [])
+  public function all($params = [], array $options = array())
   {
-    list($code, $lead_sources) = $this->httpClient->get("/lead_sources", $options);
+    list($code, $lead_sources) = $this->httpClient->get("/lead_sources", $params, $options);
     return $lead_sources;
   }
 
@@ -54,14 +55,15 @@ class LeadSourcesService
    * </figure>
    *
    * @param array $leadSource This array's attributes describe the object to be created.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing created resource.
    */
-  public function create(array $leadSource)
+  public function create(array $leadSource, array $options = array())
   {
     $attributes = array_intersect_key($leadSource, array_flip(self::$keysToPersist));
 
-    list($code, $createdLeadSource) = $this->httpClient->post("/lead_sources", $attributes);
+    list($code, $createdLeadSource) = $this->httpClient->post("/lead_sources", $attributes, $options);
     return $createdLeadSource;
   }
 
@@ -74,12 +76,13 @@ class LeadSourcesService
    * If a source with the supplied unique identifier does not exist it returns an error
    *
    * @param integer $id Unique identifier of a LeadSource
+   * @param array $options Additional request's options.
    *
    * @return array Searched LeadSource.
    */
-  public function get($id)
+  public function get($id, array $options = array())
   {
-    list($code, $lead_source) = $this->httpClient->get("/lead_sources/{$id}");
+    list($code, $lead_source) = $this->httpClient->get("/lead_sources/{$id}", null, $options);
     return $lead_source;
   }
 
@@ -96,14 +99,15 @@ class LeadSourcesService
    *
    * @param integer $id Unique identifier of a LeadSource
    * @param array $leadSource This array's attributes describe the object to be updated.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing updated resource.
    */
-  public function update($id, array $leadSource)
+  public function update($id, array $leadSource, array $options = array())
   {
     $attributes = array_intersect_key($leadSource, array_flip(self::$keysToPersist));
 
-    list($code, $updatedLeadSource) = $this->httpClient->put("/lead_sources/{$id}", $attributes);
+    list($code, $updatedLeadSource) = $this->httpClient->put("/lead_sources/{$id}", $attributes, $options);
     return $updatedLeadSource;
   }
 
@@ -117,12 +121,13 @@ class LeadSourcesService
    * This operation cannot be undone
    *
    * @param integer $id Unique identifier of a LeadSource
+   * @param array $options Additional request's options.
    *
    * @return boolean Status of the operation.
    */
-  public function destroy($id)
+  public function destroy($id, array $options = array())
   {
-    list($code, $payload) = $this->httpClient->delete("/lead_sources/{$id}");
+    list($code, $payload) = $this->httpClient->delete("/lead_sources/{$id}", null, $options);
     return $code == 204;
   }
 }
