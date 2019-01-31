@@ -107,7 +107,7 @@ class SourcesService
   {
     $attributes = array_intersect_key($source, array_flip(self::$keysToPersist));
 
-    list($code, $updatedSource) = $this->httpClient->put("/sources/{$id}", $attributes, null, $options);
+    list($code, $updatedSource) = $this->httpClient->put("/sources/{$id}", $attributes, $options);
     return $updatedSource;
   }
 
