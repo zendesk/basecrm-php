@@ -72,6 +72,18 @@ class DealsServiceTest extends TestCase
       $this->assertEquals($updatedDeal['id'], self::$deal['id']);
       $this->assertEquals($updatedDeal['value'], $initialDealValue);
   }
+  public function testCreateWithoutProvidingDealValue()
+  {
+      $dealPrototype = [
+        "contact_id" => self::$contact['id'],
+        "name" => "PHP Client Test Deal" 
+      ];
+      $createdDeal = self::$client->deals->create($dealPrototype);
+      if(isset($createdDeal) && isset($createdDeal['id'])) {
+        self::$client->deals->destroy($createdDeal['id']);
+      }
+      $this->assertEquals($createdDeal['value'], 0);
+  }
 
   public function testDestroy()
   {
