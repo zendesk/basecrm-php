@@ -30,13 +30,14 @@ class VisitsService
    *
    * Returns Visits, according to the parameters provided
    *
-   * @param array $options Search options
+   * @param array $params Search options
+   * @param array $options Additional request's options.
    *
    * @return array The list of Visits for the first page, unless otherwise specified.
    */
-  public function all($options = [])
+  public function all($params = [], array $options = array())
   {
-    list($code, $visits) = $this->httpClient->get("/visits", $options);
+    list($code, $visits) = $this->httpClient->get("/visits", $params, $options);
     return $visits;
   }
 }

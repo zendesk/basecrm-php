@@ -32,15 +32,16 @@ class SyncService
    * This is the first endpoint to call, in order to start a new synchronization session.
    *
    * @param string $deviceUUID Device's UUID for which to perform synchronization.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing synchronization session or null if there is nothing to synchronize.
    */
-  public function start($deviceUUID)
+  public function start($deviceUUID, array $options = array())
   {
     // @throws InvalidArgumentException
     $this->checkArgument($deviceUUID, 'deviceUUID');
 
-    list($code, $session) = $this->httpClient->post('/sync/start', null, ['headers' => $this->buildHeaders($deviceUUID)]);
+    list($code, $session) = $this->httpClient->post('/sync/start', null, array_merge($options, ['headers' => $this->buildHeaders($deviceUUID)]));
 
     if ($code == 204) return null;
     return $session;
@@ -57,20 +58,21 @@ class SyncService
    * @param string $deviceUUID Device's UUID for which to perform synchronization.
    * @param string $sessionId Unique identifier of a synchronization session.
    * @param string $queue Queue name.
+   * @param array $options Additional request's options.
    *
    * @return array The list of resources and associated meta data or an empty array if there is no more data to synchronize.
    */
-  public function fetch($deviceUUID, $sessionId, $queue = 'main')
+  public function fetch($deviceUUID, $sessionId, $queue = 'main', array $options = array())
   {
     // @throws InvalidArgumentException
     $this->checkArgument($deviceUUID, 'deviceUUID');
     $this->checkArgument($sessionId, 'sessionId');
     $this->checkArgument($queue, 'queue');
 
-    $options = [
+    $options = array_merge($options, [
       'headers' => $this->buildHeaders($deviceUUID),
       'raw' => true
-    ];
+    ]);
     list($code, $root) = $this->httpClient->get("/sync/{$sessionId}/queues/{$queue}", null, $options);
 
     if ($code == 204) return [];
@@ -87,10 +89,11 @@ class SyncService
    *
    * @param string $deviceUUID Device's UUID for which to perform synchronization.
    * @param array $ackKeys The list of acknowledgement keys.
+   * @param array $options Additional request's options.
    *
    * @return boolean Status of the operation.
    */
-  public function ack($deviceUUID, array $ackKeys)
+  public function ack($deviceUUID, array $ackKeys, array $options = array())
   {
     // @throws InvalidArgumentException
     $this->checkArgument($deviceUUID, 'deviceUUID');
@@ -99,7 +102,7 @@ class SyncService
     if (!$ackKeys) return true;
 
     $attributes = ['ack_keys' => $ackKeys];
-    list($code,) = $this->httpClient->post('/sync/ack', $attributes, ['headers' => $this->buildHeaders($deviceUUID)]);
+    list($code,) = $this->httpClient->post('/sync/ack', $attributes, array_merge($options, ['headers' => $this->buildHeaders($deviceUUID)]));
     return $code == 202;
   }
 

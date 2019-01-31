@@ -33,13 +33,14 @@ class ContactsService
    *
    * Returns all contacts available to the user according to the parameters provided
    *
-   * @param array $options Search options
+   * @param array $params Search options
+   * @param array $options Additional request's options.
    *
    * @return array The list of Contacts for the first page, unless otherwise specified.
    */
-  public function all($options = [])
+  public function all($params = [], array $options = array())
   {
-    list($code, $contacts) = $this->httpClient->get("/contacts", $options);
+    list($code, $contacts) = $this->httpClient->get("/contacts", $params, $options);
     return $contacts;
   }
 
@@ -52,15 +53,16 @@ class ContactsService
    * A contact may represent a single individual or an organization
    *
    * @param array $contact This array's attributes describe the object to be created.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing created resource.
    */
-  public function create(array $contact)
+  public function create(array $contact, array $options = array())
   {
     $attributes = array_intersect_key($contact, array_flip(self::$keysToPersist));
     if (isset($attributes['custom_fields']) && empty($attributes['custom_fields'])) unset($attributes['custom_fields']);
 
-    list($code, $createdContact) = $this->httpClient->post("/contacts", $attributes);
+    list($code, $createdContact) = $this->httpClient->post("/contacts", $attributes, $options);
     return $createdContact;
   }
 
@@ -73,12 +75,13 @@ class ContactsService
    * If the specified contact does not exist, the request will return an error
    *
    * @param integer $id Unique identifier of a Contact
+   * @param array $options Additional request's options.
    *
    * @return array Searched Contact.
    */
-  public function get($id)
+  public function get($id, array $options = array())
   {
-    list($code, $contact) = $this->httpClient->get("/contacts/{$id}");
+    list($code, $contact) = $this->httpClient->get("/contacts/{$id}", null, $options);
     return $contact;
   }
 
@@ -94,15 +97,16 @@ class ContactsService
    *
    * @param integer $id Unique identifier of a Contact
    * @param array $contact This array's attributes describe the object to be updated.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing updated resource.
    */
-  public function update($id, array $contact)
+  public function update($id, array $contact, array $options = array())
   {
     $attributes = array_intersect_key($contact, array_flip(self::$keysToPersist));
     if (isset($attributes['custom_fields']) && empty($attributes['custom_fields'])) unset($attributes['custom_fields']);
 
-    list($code, $updatedContact) = $this->httpClient->put("/contacts/{$id}", $attributes);
+    list($code, $updatedContact) = $this->httpClient->put("/contacts/{$id}", $attributes, $options);
     return $updatedContact;
   }
 
@@ -116,12 +120,13 @@ class ContactsService
    * This operation cannot be undone
    *
    * @param integer $id Unique identifier of a Contact
+   * @param array $options Additional request's options.
    *
    * @return boolean Status of the operation.
    */
-  public function destroy($id)
+  public function destroy($id, array $options = array())
   {
-    list($code, $payload) = $this->httpClient->delete("/contacts/{$id}");
+    list($code, $payload) = $this->httpClient->delete("/contacts/{$id}", null, $options);
     return $code == 204;
   }
 }

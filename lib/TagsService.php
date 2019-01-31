@@ -33,13 +33,14 @@ class TagsService
    *
    * Returns all tags available to the user, according to the parameters provided
    *
-   * @param array $options Search options
+   * @param array $params Search options
+   * @param array $options Additional request's options.
    *
    * @return array The list of Tags for the first page, unless otherwise specified.
    */
-  public function all($options = [])
+  public function all($params = [], array $options = array())
   {
-    list($code, $tags) = $this->httpClient->get("/tags", $options);
+    list($code, $tags) = $this->httpClient->get("/tags", $params, $options);
     return $tags;
   }
 
@@ -52,14 +53,15 @@ class TagsService
    * **Notice** the tag's name **must** be unique within the scope of the resource_type
    *
    * @param array $tag This array's attributes describe the object to be created.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing created resource.
    */
-  public function create(array $tag)
+  public function create(array $tag, array $options = array())
   {
     $attributes = array_intersect_key($tag, array_flip(self::$keysToPersist));
 
-    list($code, $createdTag) = $this->httpClient->post("/tags", $attributes);
+    list($code, $createdTag) = $this->httpClient->post("/tags", $attributes, $options);
     return $createdTag;
   }
 
@@ -72,12 +74,13 @@ class TagsService
    * If the specified tag does not exist, this query will return an error
    *
    * @param integer $id Unique identifier of a Tag
+   * @param array $options Additional request's options.
    *
    * @return array Searched Tag.
    */
-  public function get($id)
+  public function get($id, array $options = array())
   {
-    list($code, $tag) = $this->httpClient->get("/tags/{$id}");
+    list($code, $tag) = $this->httpClient->get("/tags/{$id}", null, $options);
     return $tag;
   }
 
@@ -92,14 +95,15 @@ class TagsService
    *
    * @param integer $id Unique identifier of a Tag
    * @param array $tag This array's attributes describe the object to be updated.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing updated resource.
    */
-  public function update($id, array $tag)
+  public function update($id, array $tag, array $options = array())
   {
     $attributes = array_intersect_key($tag, array_flip(self::$keysToPersist));
 
-    list($code, $updatedTag) = $this->httpClient->put("/tags/{$id}", $attributes);
+    list($code, $updatedTag) = $this->httpClient->put("/tags/{$id}", $attributes, $options);
     return $updatedTag;
   }
 
@@ -114,12 +118,13 @@ class TagsService
    * This operation cannot be undone
    *
    * @param integer $id Unique identifier of a Tag
+   * @param array $options Additional request's options.
    *
    * @return boolean Status of the operation.
    */
-  public function destroy($id)
+  public function destroy($id, array $options = array())
   {
-    list($code, $payload) = $this->httpClient->delete("/tags/{$id}");
+    list($code, $payload) = $this->httpClient->delete("/tags/{$id}", null, $options);
     return $code == 204;
   }
 }

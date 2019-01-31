@@ -30,13 +30,14 @@ class LeadUnqualifiedReasonsService
    *
    * Returns all lead unqualified reasons available to the user according to the parameters provided
    *
-   * @param array $options Search options
+   * @param array $params Search options
+   * @param array $options Additional request's options.
    *
    * @return array The list of LeadUnqualifiedReasons for the first page, unless otherwise specified.
    */
-  public function all($options = [])
+  public function all($params = [], array $options = array())
   {
-    list($code, $lead_unqualified_reasons) = $this->httpClient->get("/lead_unqualified_reasons", $options);
+    list($code, $lead_unqualified_reasons) = $this->httpClient->get("/lead_unqualified_reasons", $params, $options);
     return $lead_unqualified_reasons;
   }
 }

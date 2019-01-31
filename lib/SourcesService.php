@@ -33,13 +33,14 @@ class SourcesService
    *
    * Returns all deal sources available to the user according to the parameters provided
    *
-   * @param array $options Search options
+   * @param array $params Search options
+   * @param array $options Additional request's options.
    *
    * @return array The list of Sources for the first page, unless otherwise specified.
    */
-  public function all($options = [])
+  public function all($params = [], array $options = array())
   {
-    list($code, $sources) = $this->httpClient->get("/sources", $options);
+    list($code, $sources) = $this->httpClient->get("/sources", $params, $options);
     return $sources;
   }
 
@@ -54,14 +55,15 @@ class SourcesService
    * </figure>
    *
    * @param array $source This array's attributes describe the object to be created.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing created resource.
    */
-  public function create(array $source)
+  public function create(array $source, array $options = array())
   {
     $attributes = array_intersect_key($source, array_flip(self::$keysToPersist));
 
-    list($code, $createdSource) = $this->httpClient->post("/sources", $attributes);
+    list($code, $createdSource) = $this->httpClient->post("/sources", $attributes, $options);
     return $createdSource;
   }
 
@@ -74,12 +76,13 @@ class SourcesService
    * If a source with the supplied unique identifier does not exist it returns an error
    *
    * @param integer $id Unique identifier of a Source
+   * @param array $options Additional request's options.
    *
    * @return array Searched Source.
    */
-  public function get($id)
+  public function get($id, array $options = array())
   {
-    list($code, $source) = $this->httpClient->get("/sources/{$id}");
+    list($code, $source) = $this->httpClient->get("/sources/{$id}", null, $options);
     return $source;
   }
 
@@ -96,14 +99,15 @@ class SourcesService
    *
    * @param integer $id Unique identifier of a Source
    * @param array $source This array's attributes describe the object to be updated.
+   * @param array $options Additional request's options.
    *
    * @return array The resulting object representing updated resource.
    */
-  public function update($id, array $source)
+  public function update($id, array $source, array $options = array())
   {
     $attributes = array_intersect_key($source, array_flip(self::$keysToPersist));
 
-    list($code, $updatedSource) = $this->httpClient->put("/sources/{$id}", $attributes);
+    list($code, $updatedSource) = $this->httpClient->put("/sources/{$id}", $attributes, $options);
     return $updatedSource;
   }
 
@@ -117,12 +121,13 @@ class SourcesService
    * This operation cannot be undone
    *
    * @param integer $id Unique identifier of a Source
+   * @param array $options Additional request's options.
    *
    * @return boolean Status of the operation.
    */
-  public function destroy($id)
+  public function destroy($id, array $options = array())
   {
-    list($code, $payload) = $this->httpClient->delete("/sources/{$id}");
+    list($code, $payload) = $this->httpClient->delete("/sources/{$id}", null, $options);
     return $code == 204;
   }
 }
