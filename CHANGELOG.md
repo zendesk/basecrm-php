@@ -1,5 +1,16 @@
 ## CHANGELOG
 
+### v1.4.1 (2019-02-18)
+
+**Bug Fixes**
+  * Fixed HTTP Client, now proper uppercased HTTP method names are generated
+  * Avoid casting/unwrapping responses when $options['raw'] is used
+  * SourcesService - fixed incorrect param list
+
+**Features and Improvements**
+  * Support for adding deal without value
+  * Adds $option parameter (default array[]) to all the transitive callers of \BaseCRM\HttpClient::request() in Service classes
+
 ### v1.4.0 (2018-10-08)
 
 **Bug Fixes**
