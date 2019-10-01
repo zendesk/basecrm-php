@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### v1.4.2 (2019-10-01)
+
+**Features and Improvements**
+  * Support for `parent_organization_id` attribute in ContactsService
+
 ### v1.4.1 (2019-02-18)
 
 **Bug Fixes**
