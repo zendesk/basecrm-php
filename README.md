@@ -485,11 +485,11 @@ And to run a single suite:
 $ BASECRM_ACCESS_TOKEN=<your-token-here> ./vendor/bin/phpunit --filter testUpdate tests/LeadsServiceTest.php
 ```
 
-## License
-MIT
-
 ## Bug Reports
 Report [here](https://github.com/basecrm/basecrm-php/issues).
 
-## Contact
-BaseCRM developers (developers@getbase.com)
+## Copyright and license
+
+Copyright 2020 Zendesk
+
+Licensed under the [Apache License, Version 2.0](LICENSE)
