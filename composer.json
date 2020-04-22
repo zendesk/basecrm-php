@@ -10,12 +10,12 @@
     "client",
     "HTTP client"
   ],
-  "license": "MIT",
+  "license": "Apache License 2.0",
   "authors": [
     {
-      "email": "developers@getbase.com",
+      "email": "opensource@zendesk.com",
       "homepage": "https://github.com/basecrm/basecrm-php/graphs/contributors",
-      "name": "BaseCRM developers"
+      "name": "Zendesk"
     }
   ],
   "autoload": {
