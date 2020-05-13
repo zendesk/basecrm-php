@@ -1,6 +1,7 @@
 <?php
 namespace BaseCRM;
 
+use DateTime;
 use Exception;
 
 /**
@@ -61,6 +62,11 @@ class TestCase extends \PHPUnit_Framework_TestCase
     self::$user = self::$client->users->self();
   }
 
+  protected static function random()
+  {
+    return (new DateTime())->getTimestamp() + rand();
+  }
+
   /**
    * @ignore
    */
@@ -95,22 +101,22 @@ class TestCase extends \PHPUnit_Framework_TestCase
   {
     $contact = [
       'description' => "I know him via Tom",
-      'email' => "mark" . rand() . "@designservices.com",
+      'email' => "mark" . self::random() . "@example.com",
       'facebook' => "mjohnson",
       'fax' => "+44-208-1234567",
-      'first_name' => 'Mark' . rand(),
+      'first_name' => 'Mark' . self::random(),
       'industry' => "Design Services",
       'is_organization' => false,
-      'last_name' => 'Johnson' . rand(),
+      'last_name' => 'Johnson' . self::random(),
       'linkedin' => "mjohnson",
       'mobile' => "508-778-6516",
-      'name' => 'Design Services Company' . rand(),
+      'name' => 'Design Services Company' . self::random(),
       'phone' => "508-778-6516",
       'skype' => "mjohnson",
       'tags' => ["important"],
       'title' => "CEO",
       'twitter' => "mjohnson",
-      'website' => "www.designservices.com",
+      'website' => "www.example.com",
     ];
     $contact = self::$client->contacts->create(array_merge($contact, $attributes));
 
@@ -123,7 +129,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
       'currency' => "EUR",
       'dropbox_email' => "dropbox@4e627bcd.deals.futuresimple.com",
       'hot' => true,
-      'name' => 'Website Redesign' . rand(),
+      'name' => 'Website Redesign' . self::random(),
       'tags' => ["important"],
       'value' => 1000,
       'contact_id' => self::createContact()['id'],
@@ -139,7 +145,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
       'currency' => "EUR",
       'dropbox_email' => "dropbox@4e627bcd.deals.futuresimple.com",
       'hot' => true,
-      'name' => 'Website Redesign with decimal value' . rand(),
+      'name' => 'Website Redesign with decimal value' . self::random(),
       'tags' => ["important"],
       'value' => "11.12",
       'contact_id' => self::createContact()['id'],
@@ -156,7 +162,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
   protected static function createDealSource(array $attributes = [])
   {
     $dealSource = [
-      'name' => 'inbound marketing' . rand(),
+      'name' => 'inbound marketing' . self::random(),
       'resource_type' => 'deal'
     ];
     $dealSource = self::$client->dealSources->create(array_merge($dealSource, $attributes));
@@ -167,7 +173,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
   protected static function createDealUnqualifiedReason(array $attributes = [])
   {
     $dealUnqualifiedReason = [
-      'name' => 'Reason of unqualifying deal' . rand(),
+      'name' => 'Reason of unqualifying deal' . self::random(),
     ];
     $dealUnqualifiedReason = self::$client->dealUnqualifiedReasons->create(array_merge($dealUnqualifiedReason, $attributes));
 
@@ -178,12 +184,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
   {
     $lead = [
       'description' => "I know him via Tom",
-      'email' => "mark" . rand() . "@designservices.com",
+      'email' => "mark" . self::random() . "@example.com",
       'facebook' => "mjohnson",
       'fax' => "+44-208-1234567",
-      'first_name' => 'Mark' . rand(),
+      'first_name' => 'Mark' . self::random(),
       'industry' => "Design Services",
-      'last_name' => 'Johnson' . rand(),
+      'last_name' => 'Johnson' . self::random(),
       'linkedin' => "mjohnson",
       'mobile' => "508-778-6516",
       'phone' => "508-778-6516",
@@ -192,7 +198,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
       'tags' => ["important"],
       'title' => "CEO",
       'twitter' => "mjohnson",
-      'website' => "www.designservices.com",
+      'website' => "www.example.com",
     ];
     $lead = self::$client->leads->create(array_merge($lead, $attributes));
 
@@ -202,7 +208,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
   protected static function createLeadSource(array $attributes = [])
   {
     $leadSource = [
-      'name' => 'outbound marketing' . rand(),
+      'name' => 'outbound marketing' . self::random(),
       'resource_type' => 'lead'
     ];
     $leadSource = self::$client->leadSources->create(array_merge($leadSource, $attributes));
@@ -213,7 +219,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
   protected static function createLossReason(array $attributes = [])
   {
     $lossReason = [
-      'name' => 'We were too expensive' . rand(),
+      'name' => 'We were too expensive' . self::random(),
     ];
     $lossReason = self::$client->lossReasons->create(array_merge($lossReason, $attributes));
 
@@ -268,7 +274,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
       'currency'=> 'USD'
     ];
     $product = [
-      'name' => 'Product' . rand(),
+      'name' => 'Product' . self::random(),
       'description' => 'product description',
       'sku' => 'product-sku',
       'active' => true,
@@ -286,7 +292,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
   protected static function createSource(array $attributes = [])
   {
     $source = [
-      'name' => 'Word of mouth' . rand(),
+      'name' => 'Word of mouth' . self::random(),
     ];
     $source = self::$client->sources->create(array_merge($source, $attributes));
 
@@ -296,7 +302,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
   protected static function createTag(array $attributes = [])
   {
     $tag = [
-      'name' => 'publisher' . rand(),
+      'name' => 'publisher' . self::random(),
       'resource_type' => 'contact',
     ];
     $tag = self::$client->tags->create(array_merge($tag, $attributes));
