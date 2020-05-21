@@ -36,7 +36,7 @@
   },
   "type": "library",
   "support": {
-    "source": "https://github.com/basecrm/basecrm-php/",
+    "source": "https://github.com/zendesk/basecrm-php/",
     "issues": "https://github.com/zendesk/basecrm-php/issues"
   }
 }
