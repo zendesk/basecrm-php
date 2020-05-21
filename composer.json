@@ -14,7 +14,7 @@
   "authors": [
     {
       "email": "opensource@zendesk.com",
-      "homepage": "https://github.com/basecrm/basecrm-php/graphs/contributors",
+      "homepage": "https://github.com/zendesk/basecrm-php/graphs/contributors",
       "name": "Zendesk"
     }
   ],
@@ -34,5 +34,9 @@
   "require-dev": {
     "phpunit/phpunit": "~4.0"
   },
-  "type": "library"
+  "type": "library",
+  "support": {
+    "source": "https://github.com/zendesk/basecrm-php/",
+    "issues": "https://github.com/zendesk/basecrm-php/issues"
+  }
 }
