@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### v1.4.4 (2021-06-28)
+
+**Features and Improvements**
+* Added possibility to set deal's 'added_on' attribute
+
 ### v1.4.3 (2020-04-22)
 
 * Update license to Apache License 2.0
