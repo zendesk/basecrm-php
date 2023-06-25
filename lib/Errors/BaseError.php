@@ -10,10 +10,15 @@ class BaseError extends Exception
   public function __construct($httpStatusCode, $response)
   {
     $this->httpStatusCode = $httpStatusCode;
-    $this->errors = array_map(function($data){ return $data['error'];  }, $response['errors']);
+
+    if (isset($response['errors'])) {
+      $this->errors = array_map(function($data){ return $data['error'];  }, $response['errors']);
+    } else {
+      $this->errors = [];
+    }
 
     $this->meta = $response['meta'];
-  
+
     $extractError = function($error) {
       return "resource=" . @$error['resource'] . " field=" . @$error['field'] . " code=" . $error['code'] . " message=" . $error['message'];
     };
